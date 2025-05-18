@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as fabric from "fabric";
-import { useEditor } from "@/features/editor/hooks/useEditor";
+import { useEditor } from "../hooks/use-editor";
 
 const Editor = () => {
   const { init } = useEditor();
