@@ -1,0 +1,64 @@
+import { useCallback } from "react";
+import * as fabric from "fabric";
+
+export const useEditor = () => {
+  const init = useCallback(
+    ({
+      initialCanvas,
+      initialContainer,
+    }: {
+      initialCanvas: fabric.Canvas;
+      initialContainer: HTMLDivElement;
+    }) => {
+      const initialWorkspace = new fabric.Rect({
+        width: 900,
+        height: 1200,
+        name: "clip",
+        fill: "white",
+        selectable: false,
+        hasControls: false,
+        shadow: new fabric.Shadow({
+          color: "rgba(0,0,0,0.8)",
+          blur: 5,
+        }),
+      });
+
+      initialCanvas.setDimensions(
+        {
+          width: initialContainer.offsetWidth,
+          height: initialContainer.offsetHeight,
+        },
+        {
+          cssOnly: false,
+        }
+      );
+
+      initialCanvas.add(initialWorkspace);
+      initialCanvas.centerObject(initialWorkspace);
+      initialCanvas.clipPath = initialWorkspace;
+
+      const rectangle = new fabric.Rect({
+        fill: "blue",
+        width: 100,
+        height: 150,
+      });
+
+      rectangle.cornerColor = "white";
+      rectangle.cornerStyle = "circle";
+      rectangle.borderColor = "black";
+      rectangle.borderScaleFactor = 1.5;
+      rectangle.transparentCorners = false;
+      rectangle.borderOpacityWhenMoving = 1;
+      rectangle.cornerStrokeColor = "black";
+      // rectangle.cornerStrokeColor = "#3b82f6";
+      rectangle.cornerSize = 10;
+      // rectangle.padding = 1;
+
+      initialCanvas.add(rectangle);
+      initialCanvas.centerObject(rectangle);
+    },
+    []
+  );
+
+  return { init };
+};
