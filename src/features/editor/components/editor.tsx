@@ -7,13 +7,13 @@ import { useEditor } from "../hooks/use-editor";
 const Editor = () => {
   const { init } = useEditor();
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current!, {
       controlsAboveOverlay: true,
-      preserveObjectStacking: true,
+      preserveObjectStacking: true, 
     });
 
     init({
@@ -27,7 +27,7 @@ const Editor = () => {
   }, [init]);
 
   return (
-    <div className="h-full flex">
+    <div className="h-full flex flex-col">
       <div ref={containerRef} className="flex-1 h-full bg-muted">
         <canvas ref={canvasRef} />
       </div>
