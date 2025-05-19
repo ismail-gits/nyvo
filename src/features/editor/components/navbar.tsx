@@ -24,8 +24,15 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Hint from "@/components/hint";
 import Logo from "./logo";
+import { ActiveTool } from "../types";
+import { cn } from "@/lib/utils";
 
-const Navbar = () => {
+interface NavbarProps {
+  activeTool: ActiveTool;
+  onChangeActiveTool: (tool: ActiveTool) => void;
+}
+
+const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
@@ -34,7 +41,7 @@ const Navbar = () => {
           <DropdownMenuTrigger asChild>
             <Button size={"sm"} variant={"ghost"}>
               File
-              <ChevronDown className="size-4 ml-2" />
+              <ChevronDown className="size-4 ml-1" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="min-w-60">
@@ -57,8 +64,8 @@ const Navbar = () => {
           <Button
             variant={"ghost"}
             size={"icon"}
-            onClick={() => {}} // TODO : Add functionality
-            className="" // TODO: Add dyanmic class
+            onClick={() => onChangeActiveTool(activeTool)}
+            className={cn(activeTool === "select" && "bg-gray-100")}
           >
             <MousePointerClick className="size-4" />
           </Button>
@@ -95,12 +102,12 @@ const Navbar = () => {
             <DropdownMenuTrigger asChild>
               <Button size={"sm"} variant={"ghost"}>
                 Export
-                <Download className="size-4 ml-2" />
+                <Download className="size-4 ml-1" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-60">
               <DropdownMenuItem
-                className="flex items-centern gap-x-2"
+                className="flex items-center gap-x-2"
                 onClick={() => {}} // TODO: Add functionality
               >
                 <BsFiletypeJson className="size-7" />
@@ -112,7 +119,7 @@ const Navbar = () => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-centern gap-x-2"
+                className="flex items-center gap-x-2"
                 onClick={() => {}} // TODO: Add functionality
               >
                 <BsFiletypePng className="size-7" />
@@ -124,7 +131,7 @@ const Navbar = () => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-centern gap-x-2"
+                className="flex items-center gap-x-2"
                 onClick={() => {}} // TODO: Add functionality
               >
                 <BsFiletypeJpg className="size-7" />
@@ -136,7 +143,7 @@ const Navbar = () => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-centern gap-x-2"
+                className="flex items-center gap-x-2"
                 onClick={() => {}} // TODO: Add functionality
               >
                 <BsFiletypeSvg className="size-7" />
