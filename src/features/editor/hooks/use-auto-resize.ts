@@ -22,7 +22,7 @@ export const useAutoResize = ({ canvas, container, workspace }: UseAutoResizePro
       height
     })
 
-    const center = canvas.getCenter();
+    const center = canvas.getCenterPoint();
 
     const zoomRatio = 0.85;
 
@@ -34,7 +34,7 @@ export const useAutoResize = ({ canvas, container, workspace }: UseAutoResizePro
     const zoom = zoomRatio * scale;
 
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-    canvas.zoomToPoint(new fabric.Point(center.left, center.top), zoom);
+    canvas.zoomToPoint(new fabric.Point(center.x, center.y), zoom);
 
     const workspaceCenter = workspace.getCenterPoint();
     const viewPortTransform = canvas.viewportTransform;
