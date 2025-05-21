@@ -1,17 +1,120 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import * as fabric from "fabric";
 import { useAutoResize } from "./use-auto-resize";
+import {
+  BuildEditorProps,
+  CIRCLE_OPTIONS,
+  CONTROL_OPTIONS,
+  DIAMOND_OPTIONS,
+  Editor,
+  RECTANGLE_OPTIONS,
+  TRIANGLE_OPTIONS,
+} from "../types";
+
+const buildEditor = ({ canvas, workspace }: BuildEditorProps): Editor => {
+  const center = (object: fabric.FabricObject) => {
+    const centerPoint = workspace?.getCenterPoint();
+    canvas._centerObject(object, centerPoint!);
+  };
+
+  return {
+    addCircle: () => {
+      const object = new fabric.Circle({
+        ...CIRCLE_OPTIONS,
+        ...CONTROL_OPTIONS,
+      });
+
+      center(object);
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+    addSoftRectangle: () => {
+      const object = new fabric.Rect({
+        ...RECTANGLE_OPTIONS,
+        ...CONTROL_OPTIONS,
+        rx: 50,
+        ry: 50,
+      });
+
+      center(object);
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+    addRectangle: () => {
+      const object = new fabric.Rect({
+        ...RECTANGLE_OPTIONS,
+        ...CONTROL_OPTIONS,
+      });
+
+      center(object);
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+    addTriangle: () => {
+      const object = new fabric.Triangle({
+        ...TRIANGLE_OPTIONS,
+        ...CONTROL_OPTIONS,
+      });
+
+      center(object);
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+    addInverseTriangle: () => {
+      const object = new fabric.Triangle({
+        ...TRIANGLE_OPTIONS,
+        ...CONTROL_OPTIONS,
+        scaleY: -1,
+      });
+
+      center(object);
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+    addDiamond: () => {
+      const size = 200;
+
+      const object = new fabric.Polygon(
+        [
+          { x: 0, y: -size },
+          { x: size, y: 0 },
+          { x: 0, y: size },
+          { x: -size, y: 0 },
+        ],
+        {
+          ...DIAMOND_OPTIONS,
+          ...CONTROL_OPTIONS,
+        }
+      );
+
+      center(object);
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+  };
+};
 
 export const useEditor = () => {
-  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null)
-  const [container, setContainer] = useState<HTMLDivElement | null>(null)
-  const [workspace, setWorkspace] = useState<fabric.Rect | null>(null)
+  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [workspace, setWorkspace] = useState<fabric.Rect | null>(null);
 
   useAutoResize({
     canvas,
     container,
-    workspace
-  })
+    workspace,
+  });
+
+  const editor = useMemo(() => {
+    if (canvas) {
+      return buildEditor({
+        canvas,
+        workspace,
+      });
+    }
+
+    return undefined;
+  }, [canvas]);
 
   const init = useCallback(
     ({
@@ -47,26 +150,25 @@ export const useEditor = () => {
       initialCanvas.centerObject(initialWorkspace);
       initialCanvas.clipPath = initialWorkspace;
 
-      setWorkspace(initialWorkspace)
-      setCanvas(initialCanvas)
-      setContainer(initialContainer)
+      setWorkspace(initialWorkspace);
+      setCanvas(initialCanvas);
+      setContainer(initialContainer);
 
       const rectangle = new fabric.Rect({
         fill: "blue",
-        width: 100,
-        height: 150,
+        width: 200,
+        height: 300,
+        cornerColor: "white",
+        borderColor: "black",
+        cornerStyle: "circle",
+        borderScaleFactor: 1.5,
+        transparentCorners: false,
+        borderOpacityWhenMoving: 1,
+        cornerStrokeColor: "black",
+        cornerSize: 10,
+        padding: 1,
       });
-
-      rectangle.cornerColor = "white";
-      rectangle.cornerStyle = "circle";
-      rectangle.borderColor = "black";
-      rectangle.borderScaleFactor = 1.5;
-      rectangle.transparentCorners = false;
-      rectangle.borderOpacityWhenMoving = 1;
-      rectangle.cornerStrokeColor = "black";
       // rectangle.cornerStrokeColor = "#3b82f6";
-      rectangle.cornerSize = 10;
-      rectangle.padding = 1;
 
       initialCanvas.add(rectangle);
       initialCanvas.centerObject(rectangle);
@@ -74,5 +176,5 @@ export const useEditor = () => {
     []
   );
 
-  return { init };
+  return { init, editor };
 };
