@@ -12,6 +12,7 @@ import {
   STROKE_COLOR,
   STROKE_WIDTH,
   TRIANGLE_OPTIONS,
+  UseEditorProps,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
@@ -25,7 +26,7 @@ const buildEditor = ({
   setStrokeColor,
   strokeWidth,
   setStrokeWidth,
-  selectedObjects
+  selectedObjects,
 }: BuildEditorProps): Editor => {
   const center = (object: fabric.FabricObject) => {
     const centerPoint = workspace?.getCenterPoint();
@@ -40,7 +41,7 @@ const buildEditor = ({
           fill: color,
         });
       });
-      canvas.renderAll()
+      canvas.renderAll();
     },
     changeStrokeColor: (color: string) => {
       setFillColor(color);
@@ -55,7 +56,7 @@ const buildEditor = ({
           stroke: color,
         });
       });
-      canvas.renderAll()
+      canvas.renderAll();
     },
     changeStrokeWidth: (width: number) => {
       setStrokeWidth(width);
@@ -64,7 +65,7 @@ const buildEditor = ({
           strokeWidth: width,
         });
       });
-      canvas.renderAll()
+      canvas.renderAll();
     },
     addCircle: () => {
       const object = new fabric.Circle({
@@ -72,7 +73,7 @@ const buildEditor = ({
         ...CONTROL_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth
+        strokeWidth: strokeWidth,
       });
 
       center(object);
@@ -87,7 +88,7 @@ const buildEditor = ({
         ry: 50,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth
+        strokeWidth: strokeWidth,
       });
 
       center(object);
@@ -100,7 +101,7 @@ const buildEditor = ({
         ...CONTROL_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth
+        strokeWidth: strokeWidth,
       });
 
       center(object);
@@ -113,7 +114,7 @@ const buildEditor = ({
         ...CONTROL_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth
+        strokeWidth: strokeWidth,
       });
 
       center(object);
@@ -127,7 +128,7 @@ const buildEditor = ({
         scaleY: -1,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth
+        strokeWidth: strokeWidth,
       });
 
       center(object);
@@ -148,8 +149,8 @@ const buildEditor = ({
           ...DIAMOND_OPTIONS,
           ...CONTROL_OPTIONS,
           fill: fillColor,
-        stroke: strokeColor,
-        strokeWidth: strokeWidth
+          stroke: strokeColor,
+          strokeWidth: strokeWidth,
         }
       );
 
@@ -158,14 +159,38 @@ const buildEditor = ({
       canvas.setActiveObject(object);
     },
     canvas,
-    fillColor,
-    strokeColor,
+    getActiveFillColor: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return fillColor;
+      }
+
+      const value = selectedObject.fill || fillColor;
+
+      // currently gradients and patterns are not supported
+      return value as string;
+    },
+    getActiveStrokeColor: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return strokeColor;
+      }
+
+      const value = selectedObject.stroke || strokeColor;
+
+      // currently gradients and patterns are not supported
+      return value as string;
+    },
     strokeWidth,
-    selectedObjects
+    selectedObjects,
   };
 };
 
-export const useEditor = () => {
+export const useEditor = ({
+  clearSelectionCallback
+}: UseEditorProps) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [workspace, setWorkspace] = useState<fabric.Rect | null>(null);
@@ -186,6 +211,7 @@ export const useEditor = () => {
   useCanvasEvents({
     canvas,
     setSelectedObjects,
+    clearSelectionCallback
   });
 
   const editor = useMemo(() => {
@@ -199,7 +225,7 @@ export const useEditor = () => {
         setStrokeColor,
         strokeWidth,
         setStrokeWidth,
-        selectedObjects
+        selectedObjects,
       });
     }
 

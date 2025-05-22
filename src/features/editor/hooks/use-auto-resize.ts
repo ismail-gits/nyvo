@@ -24,7 +24,7 @@ export const useAutoResize = ({
     canvas.setDimensions({
       width,
       height,
-    });
+    })
 
     const center = canvas.getCenterPoint();
 

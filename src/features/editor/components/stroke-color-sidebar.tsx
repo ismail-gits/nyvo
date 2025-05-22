@@ -8,37 +8,37 @@ import dynamic from "next/dynamic";
 
 const ColorPicker = dynamic(() => import("./color-picker"), { ssr: false });
 
-interface FillColorSidebarProps {
+interface StrokeColorSidebarProps {
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }
 
-const FillColorSidebar = ({
+const StrokeColorSidebar = ({
   editor,
   activeTool,
   onChangeActiveTool,
-}: FillColorSidebarProps) => {
-  const color = editor?.getActiveFillColor() || FILL_COLOR;
+}: StrokeColorSidebarProps) => {
+  const color = editor?.getActiveStrokeColor() || FILL_COLOR;
 
   const onClose = () => {
     onChangeActiveTool("select");
   };
 
   const onChange = (color: string) => {
-    editor?.changeFillColor(color);
+    editor?.changeStrokeColor(color);
   };
 
   return (
     <aside
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
-        activeTool === "fill" ? "visible" : "hidden"
+        activeTool === "stroke-color" ? "visible" : "hidden"
       )}
     >
       <ToolSidebarHeader
-        title="Fill Color"
-        description="Add fill color to your elements"
+        title="Stroke Color"
+        description="Add stroke color to your elements"
       />
       <ScrollArea>
         <div className="p-4 space-y-6">
@@ -50,4 +50,4 @@ const FillColorSidebar = ({
   );
 };
 
-export default FillColorSidebar;
+export default StrokeColorSidebar;
