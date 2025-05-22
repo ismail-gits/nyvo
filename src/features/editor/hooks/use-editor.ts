@@ -10,6 +10,7 @@ import {
   FILL_COLOR,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
+  STROKE_DASH_ARRAY,
   STROKE_WIDTH,
   TRIANGLE_OPTIONS,
   UseEditorProps,
@@ -27,6 +28,8 @@ const buildEditor = ({
   strokeWidth,
   setStrokeWidth,
   selectedObjects,
+  strokeDashArray,
+  setStrokeDashArray,
 }: BuildEditorProps): Editor => {
   const center = (object: fabric.FabricObject) => {
     const centerPoint = workspace?.getCenterPoint();
@@ -63,6 +66,16 @@ const buildEditor = ({
       canvas.getActiveObjects().forEach((object) => {
         object.set({
           strokeWidth: width,
+        });
+        object.setCoords();
+      });
+      canvas.renderAll();
+    },
+    changeStrokeDashArray: (strokeDashedArray: number[]) => {
+      setStrokeDashArray(strokeDashedArray);
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({
+          strokeDashArray: strokeDashedArray,
         });
       });
       canvas.renderAll();
@@ -183,20 +196,41 @@ const buildEditor = ({
       // currently gradients and patterns are not supported
       return value as string;
     },
-    strokeWidth,
+    getActiveStrokeWidth: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return strokeWidth;
+      }
+
+      const value = selectedObject.strokeWidth || strokeWidth;
+
+      return value;
+    },
+    getActiveStrokeDashArray: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return strokeDashArray;
+      }
+
+      const value = selectedObject.strokeDashArray || strokeDashArray;
+
+      return value;
+    },
     selectedObjects,
   };
 };
 
-export const useEditor = ({
-  clearSelectionCallback
-}: UseEditorProps) => {
+export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [workspace, setWorkspace] = useState<fabric.Rect | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.FabricObject[]>(
     []
   );
+  const [strokeDashArray, setStrokeDashArray] =
+    useState<number[]>(STROKE_DASH_ARRAY);
 
   const [fillColor, setFillColor] = useState(FILL_COLOR);
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
@@ -211,7 +245,7 @@ export const useEditor = ({
   useCanvasEvents({
     canvas,
     setSelectedObjects,
-    clearSelectionCallback
+    clearSelectionCallback,
   });
 
   const editor = useMemo(() => {
@@ -226,11 +260,20 @@ export const useEditor = ({
         strokeWidth,
         setStrokeWidth,
         selectedObjects,
+        strokeDashArray,
+        setStrokeDashArray,
       });
     }
 
     return undefined;
-  }, [canvas, fillColor, strokeColor, strokeWidth, selectedObjects]);
+  }, [
+    canvas,
+    fillColor,
+    strokeColor,
+    strokeWidth,
+    selectedObjects,
+    strokeDashArray,
+  ]);
 
   const init = useCallback(
     ({
