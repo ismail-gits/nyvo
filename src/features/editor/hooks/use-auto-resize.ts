@@ -21,43 +21,45 @@ export const useAutoResize = ({
     const width = container.offsetWidth;
     const height = container.offsetHeight;
 
+    // Set canvas dimension
     canvas.setDimensions({
       width,
       height,
-    })
-
-    const center = canvas.getCenterPoint();
-
-    const zoomRatio = 0.85;
-
-    const scale = fabric.util.findScaleToFit(workspace, {
-      width: width,
-      height: height,
     });
 
+    // Get canvas center
+    const canvasCenter  = canvas.getCenterPoint();
+
+    // Zoom ratio to leave some padding
+    const zoomRatio = 0.85;
+
+    // Find scale to fit workspace in view
+    const scale = fabric.util.findScaleToFit(workspace, {
+      width,
+      height,
+    });
     const zoom = zoomRatio * scale;
 
+    // Reset transform before applying new zoom
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-    canvas.zoomToPoint(new fabric.Point(center.x, center.y), zoom);
 
+    // Zoom to center
+    canvas.zoomToPoint(canvasCenter, zoom);
+
+    // Adjust viewport to center the workspace
     const workspaceCenter = workspace.getCenterPoint();
-    const viewPortTransform = canvas.viewportTransform;
+    const transform = canvas.viewportTransform;
 
-    if (
-      canvas.width === undefined ||
-      canvas.height === undefined ||
-      !viewPortTransform
-    ) {
-      return;
-    }
+    if (canvas.width && canvas.height && transform) {
+    // Shift x and y translation to center workspace
+    transform[4] = Math.round(canvas.width / 2 - workspaceCenter.x * transform[0]);
+    transform[5] = Math.round(canvas.height / 2 - workspaceCenter.y * transform[3]);
 
-    viewPortTransform[4] =
-      canvas.width / 2 - workspaceCenter.x * viewPortTransform[0];
-    viewPortTransform[5] =
-      canvas.height / 2 - workspaceCenter.y * viewPortTransform[3];
+    canvas.setViewportTransform(transform);
+  }
 
-    canvas.setViewportTransform(viewPortTransform);
-
+  // Set coords and re-render
+    canvas.getObjects().forEach((obj) => obj.setCoords());
     canvas.requestRenderAll();
   }, [canvas, container, workspace]);
 

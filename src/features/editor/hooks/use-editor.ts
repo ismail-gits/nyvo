@@ -37,6 +37,29 @@ const buildEditor = ({
   };
 
   return {
+    bringForward: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.bringObjectForward(object);
+      });
+
+      if (workspace) {
+        canvas.sendObjectToBack(workspace);
+      }
+
+      canvas.renderAll();
+    },
+    sendBackward: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.sendObjectBackwards(object);
+      });
+
+      if (workspace) {
+        canvas.sendObjectToBack(workspace);
+      }
+
+      canvas.renderAll();
+    },
+
     changeFillColor: (color: string) => {
       setFillColor(color);
       canvas.getActiveObjects().forEach((object) => {
@@ -47,7 +70,7 @@ const buildEditor = ({
       canvas.renderAll();
     },
     changeStrokeColor: (color: string) => {
-      setFillColor(color);
+      setStrokeColor(color);
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
           object.set({
@@ -284,6 +307,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
       initialContainer: HTMLDivElement;
     }) => {
       const initialWorkspace = new fabric.Rect({
+        id: "workspace",
         width: 900,
         height: 1200,
         fill: "white",

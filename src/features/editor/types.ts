@@ -8,8 +8,8 @@ export const selectionDependentTools = [
   "opacity",
   "remove-bg",
   "stroke-color",
-  "stroke-width"
-]
+  "stroke-width",
+];
 
 export const colors = [
   material.red["500"],
@@ -53,7 +53,7 @@ export type ActiveTool =
 export const FILL_COLOR = "rgba(0, 0, 255, 1)";
 export const STROKE_COLOR = "rgba(0, 0, 255, 1)";
 export const STROKE_WIDTH = 2;
-export const STROKE_DASH_ARRAY = []
+export const STROKE_DASH_ARRAY = [];
 
 export type CornerStyleType = "circle" | "rect" | undefined;
 export const CONTROL_CORNER_COLOR = "rgba(255, 255, 255, 1)";
@@ -114,8 +114,8 @@ export const DIAMOND_OPTIONS = {
 };
 
 export type UseEditorProps = {
-  clearSelectionCallback: () => void  
-}
+  clearSelectionCallback: () => void;
+};
 
 export type BuildEditorProps = {
   canvas: fabric.Canvas;
@@ -127,15 +127,17 @@ export type BuildEditorProps = {
   strokeWidth: number;
   setStrokeWidth: (width: number) => void;
   selectedObjects: fabric.FabricObject[];
-  strokeDashArray: number[],
-  setStrokeDashArray: (strokeDashedArray: number[]) => void
+  strokeDashArray: number[];
+  setStrokeDashArray: (strokeDashedArray: number[]) => void;
 };
 
 export interface Editor {
+  bringForward: () => void;
+  sendBackward: () => void;
   changeFillColor: (color: string) => void;
   changeStrokeColor: (color: string) => void;
   changeStrokeWidth: (width: number) => void;
-  changeStrokeDashArray: (strokeDashedArray: number[]) => void
+  changeStrokeDashArray: (strokeDashedArray: number[]) => void;
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;
@@ -146,6 +148,6 @@ export interface Editor {
   getActiveFillColor: () => string;
   getActiveStrokeColor: () => string;
   getActiveStrokeWidth: () => number;
-  getActiveStrokeDashArray: () => number[]
+  getActiveStrokeDashArray: () => number[];
   selectedObjects: fabric.FabricObject[];
 }
