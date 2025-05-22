@@ -7,9 +7,13 @@ interface UseAutoResizeProps {
   workspace: fabric.Rect | null;
 }
 
-export const useAutoResize = ({ canvas, container, workspace }: UseAutoResizeProps) => {
+export const useAutoResize = ({
+  canvas,
+  container,
+  workspace,
+}: UseAutoResizeProps) => {
   const autoZoom = useCallback(() => {
-    console.log("resizing")
+    console.log("resizing");
     if (!canvas || !container || !workspace) {
       return;
     }
@@ -19,8 +23,8 @@ export const useAutoResize = ({ canvas, container, workspace }: UseAutoResizePro
 
     canvas.setDimensions({
       width,
-      height
-    })
+      height,
+    });
 
     const center = canvas.getCenterPoint();
 
