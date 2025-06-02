@@ -12,6 +12,7 @@ import {
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
   STROKE_WIDTH,
+  TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
   UseEditorProps,
 } from "../types";
@@ -36,7 +37,23 @@ const buildEditor = ({
     canvas._centerObject(object, centerPoint!);
   };
 
+  const addToCanvas = (object: fabric.Object) => {
+    center(object)
+    canvas.add(object)
+    canvas.setActiveObject(object)
+  }
+
   return {
+    addText: (value: string, options?: Partial<fabric.TextboxProps>) => {
+      const object = new fabric.Textbox(value, {
+        ...TEXT_OPTIONS,
+        ...CONTROL_OPTIONS,
+        fill: fillColor,
+        ...options,
+      } );
+
+      addToCanvas(object)
+    },
     getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
 
@@ -132,9 +149,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
       });
 
-      center(object);
-      canvas.add(object);
-      canvas.setActiveObject(object);
+      addToCanvas(object)
     },
     addSoftRectangle: () => {
       const object = new fabric.Rect({
@@ -147,9 +162,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
       });
 
-      center(object);
-      canvas.add(object);
-      canvas.setActiveObject(object);
+      addToCanvas(object)
     },
     addRectangle: () => {
       const object = new fabric.Rect({
@@ -160,9 +173,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
       });
 
-      center(object);
-      canvas.add(object);
-      canvas.setActiveObject(object);
+      addToCanvas(object)
     },
     addTriangle: () => {
       const object = new fabric.Triangle({
@@ -173,9 +184,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
       });
 
-      center(object);
-      canvas.add(object);
-      canvas.setActiveObject(object);
+      addToCanvas(object)
     },
     addInverseTriangle: () => {
       const object = new fabric.Triangle({
@@ -187,9 +196,7 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
       });
 
-      center(object);
-      canvas.add(object);
-      canvas.setActiveObject(object);
+      addToCanvas(object)
     },
     addDiamond: () => {
       const size = 200;
@@ -210,9 +217,7 @@ const buildEditor = ({
         }
       );
 
-      center(object);
-      canvas.add(object);
-      canvas.setActiveObject(object);
+      addToCanvas(object)
     },
     canvas,
     getActiveFillColor: () => {
@@ -374,8 +379,8 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
       });
       // rectangle.cornerStrokeColor = "#3b82f6";
 
-      initialCanvas.add(rectangle);
-      initialCanvas.centerObject(rectangle);
+      // initialCanvas.add(rectangle);
+      // initialCanvas.centerObject(rectangle);
     },
     []
   );

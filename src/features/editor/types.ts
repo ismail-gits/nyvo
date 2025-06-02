@@ -54,6 +54,8 @@ export const FILL_COLOR = "rgba(0, 0, 255, 1)";
 export const STROKE_COLOR = "rgba(0, 0, 255, 1)";
 export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = [];
+export const FONT_FAMILY = "Arial";
+export const FONT_SIZE = 50;
 
 export type CornerStyleType = "circle" | "rect" | undefined;
 export const CONTROL_CORNER_COLOR = "rgba(255, 255, 255, 1)";
@@ -113,6 +115,14 @@ export const DIAMOND_OPTIONS = {
   angle: 0,
 };
 
+export const TEXT_OPTIONS = {
+  left: 100,
+  top: 100,
+  fill: FILL_COLOR,
+  fontSize: FONT_SIZE,
+  fontFamily: FONT_FAMILY,
+};
+
 export type UseEditorProps = {
   clearSelectionCallback: () => void;
 };
@@ -132,8 +142,9 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  addText: (value: string, options?: Partial<fabric.TextboxProps>) => void;
   changeOpacity: (opacity: number) => void;
-  getActiveOpacity: () => number,
+  getActiveOpacity: () => number;
   bringForward: () => void;
   sendBackward: () => void;
   changeFillColor: (color: string) => void;

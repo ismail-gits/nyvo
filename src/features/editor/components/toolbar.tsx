@@ -5,6 +5,7 @@ import Hint from "@/components/hint";
 import { cn } from "@/lib/utils";
 import { BsBorderWidth, BsTransparency } from "react-icons/bs";
 import { ArrowDown, ArrowUp } from "lucide-react";
+import { isTextType } from "../utils";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -21,6 +22,9 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
       <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2" />
     );
   }
+
+  const selectedObjectType = editor?.selectedObjects[0].type
+  const isText = isTextType(selectedObjectType)
 
   const [properties, setProperties] = useState({
     fillColor,
@@ -47,25 +51,28 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
           </Button>
         </Hint>
       </div>
-      <div className="flex items-center h-full justify-center">
-        <Hint label="Stroke Color" side="bottom">
-          <Button
-            onClick={() => {
-              onChangeActiveTool("stroke-color");
-            }}
-            size={"icon"}
-            variant={"ghost"}
-            className={cn(activeTool === "stroke-color" && "bg-gray-100")}
-          >
-            <div
-              className="rounded-sm size-4 border-2 bg-white"
-              style={{
-                borderColor: strokeColor,
+      {!isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Stroke Color" side="bottom">
+            <Button
+              onClick={() => {
+                onChangeActiveTool("stroke-color");
               }}
-            />
-          </Button>
-        </Hint>
-      </div>
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(activeTool === "stroke-color" && "bg-gray-100")}
+            >
+              <div
+                className="rounded-sm size-4 border-2 bg-white"
+                style={{
+                  borderColor: strokeColor,
+                }}
+              />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {!isText && (
       <div className="flex items-center h-full justify-center">
         <Hint label="Stroke Width" side="bottom">
           <Button
@@ -80,6 +87,7 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
           </Button>
         </Hint>
       </div>
+      )}
       <div className="flex items-center h-full justify-center">
         <Hint label="Bring Forward" side="bottom">
           <Button
