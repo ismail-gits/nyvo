@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ActiveTool, Editor, FILL_COLOR } from "../types";
+import { ActiveTool, Editor, FILL_COLOR, STROKE_COLOR } from "../types";
 
 import ToolSidebarHeader from "./tool-sidebar-header";
 import ToolSidebarClose from "./tool-sidebar-close";
@@ -19,7 +19,7 @@ const StrokeColorSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: StrokeColorSidebarProps) => {
-  const color = editor?.getActiveStrokeColor() || FILL_COLOR;
+  const color = editor?.getActiveStrokeColor() || STROKE_COLOR;
 
   const onClose = () => {
     onChangeActiveTool("select");

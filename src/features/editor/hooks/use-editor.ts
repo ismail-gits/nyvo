@@ -37,6 +37,26 @@ const buildEditor = ({
   };
 
   return {
+    getActiveOpacity: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return 1;
+      }
+
+      const opacity = selectedObject.get("opacity") || 1;
+
+      return opacity;
+    },
+    changeOpacity: (opacity: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({
+          opacity,
+        });
+
+        canvas.renderAll();
+      });
+    },
     bringForward: () => {
       canvas.getActiveObjects().forEach((object) => {
         canvas.bringObjectForward(object);
@@ -350,6 +370,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
         cornerStrokeColor: "black",
         cornerSize: 10,
         padding: 1,
+        stroke: "blue",
       });
       // rectangle.cornerStrokeColor = "#3b82f6";
 
