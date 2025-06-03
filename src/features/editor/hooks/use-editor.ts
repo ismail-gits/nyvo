@@ -9,6 +9,7 @@ import {
   Editor,
   FILL_COLOR,
   FONT_FAMILY,
+  FONT_SIZE,
   FONT_STYLE,
   FONT_WEIGHT,
   RECTANGLE_OPTIONS,
@@ -21,7 +22,6 @@ import {
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
-import { ITextboxOptions } from "fabric/fabric-impl";
 
 const buildEditor = ({
   canvas,
@@ -50,6 +50,28 @@ const buildEditor = ({
   };
 
   return {
+    changeFontSize: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          object.set({
+            fontSize: value,
+          });
+        }
+
+        canvas.requestRenderAll();
+      });
+    },
+    getActiveFontSize: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return FONT_SIZE
+      }
+
+      const value = (selectedObject.get("fontSize") as number) || FONT_SIZE;
+
+      return value;
+    },
     changeTextAlign: (value: string) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {

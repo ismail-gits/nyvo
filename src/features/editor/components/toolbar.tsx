@@ -1,11 +1,24 @@
 import React, { useState } from "react";
-import { ActiveTool, Editor, FONT_STYLE, FONT_WEIGHT } from "../types";
+import {
+  ActiveTool,
+  Editor,
+  FONT_SIZE,
+  FONT_STYLE,
+  FONT_WEIGHT,
+} from "../types";
 import { Button } from "@/components/ui/button";
 import Hint from "@/components/hint";
 import { cn } from "@/lib/utils";
 import { BsBorderWidth } from "react-icons/bs";
 import { RxTransparencyGrid } from "react-icons/rx";
-import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  ArrowDown,
+  ArrowUp,
+  ChevronDown,
+} from "lucide-react";
 import { isTextType } from "../utils";
 import {
   FaBold,
@@ -13,6 +26,7 @@ import {
   FaStrikethrough,
   FaUnderline,
 } from "react-icons/fa6";
+import FontSizeInput from "./font-size-input";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -29,6 +43,7 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
   const initialFontLinethrough = editor?.getActiveFontLinethrough();
   const initialFontUnderline = editor?.getActiveFontUnderline();
   const initialTextAlign = editor?.getActiveTextAlign();
+  const initialFontSize = editor?.getActiveFontSize() || FONT_SIZE;
 
   const [properties, setProperties] = useState({
     fillColor: initialFillColor,
@@ -39,6 +54,7 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
     fontLinethrough: initialFontLinethrough,
     fontUnderline: initialFontUnderline,
     textAlign: initialTextAlign,
+    fontSize: initialFontSize,
   });
 
   if (editor?.selectedObjects.length === 0) {
@@ -117,6 +133,18 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
     setProperties({
       ...properties,
       textAlign: value,
+    });
+  };
+
+  const onChangeFontSize = (value: number) => {
+    if (!selectedObject) {
+      return;
+    }
+
+    editor.changeFontSize(value);
+    setProperties({
+      ...properties,
+      fontSize: value,
     });
   };
 
@@ -259,6 +287,14 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
               <AlignRight className="size-4" />
             </Button>
           </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <FontSizeInput
+            value={properties.fontSize}
+            onChange={onChangeFontSize}
+          />
         </div>
       )}
       {!isText && (
