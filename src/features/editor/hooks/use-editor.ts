@@ -4,7 +4,6 @@ import { useAutoResize } from "./use-auto-resize";
 import {
   BuildEditorProps,
   CIRCLE_OPTIONS,
-  CONTROL_OPTIONS,
   DIAMOND_OPTIONS,
   Editor,
   FILL_COLOR,
@@ -221,7 +220,6 @@ const buildEditor = ({
     addText: (value: string, options?: Partial<fabric.TextboxProps>) => {
       const object = new fabric.Textbox(value, {
         ...TEXT_OPTIONS,
-        ...CONTROL_OPTIONS,
         ...options,
         fill: fillColor,
       });
@@ -317,7 +315,6 @@ const buildEditor = ({
     addCircle: () => {
       const object = new fabric.Circle({
         ...CIRCLE_OPTIONS,
-        ...CONTROL_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
         strokeWidth: strokeWidth,
@@ -328,7 +325,6 @@ const buildEditor = ({
     addSoftRectangle: () => {
       const object = new fabric.Rect({
         ...RECTANGLE_OPTIONS,
-        ...CONTROL_OPTIONS,
         rx: 50,
         ry: 50,
         fill: fillColor,
@@ -341,7 +337,6 @@ const buildEditor = ({
     addRectangle: () => {
       const object = new fabric.Rect({
         ...RECTANGLE_OPTIONS,
-        ...CONTROL_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
         strokeWidth: strokeWidth,
@@ -352,7 +347,6 @@ const buildEditor = ({
     addTriangle: () => {
       const object = new fabric.Triangle({
         ...TRIANGLE_OPTIONS,
-        ...CONTROL_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
         strokeWidth: strokeWidth,
@@ -363,7 +357,6 @@ const buildEditor = ({
     addInverseTriangle: () => {
       const object = new fabric.Triangle({
         ...TRIANGLE_OPTIONS,
-        ...CONTROL_OPTIONS,
         scaleY: -1,
         fill: fillColor,
         stroke: strokeColor,
@@ -384,7 +377,6 @@ const buildEditor = ({
         ],
         {
           ...DIAMOND_OPTIONS,
-          ...CONTROL_OPTIONS,
           fill: fillColor,
           stroke: strokeColor,
           strokeWidth: strokeWidth,

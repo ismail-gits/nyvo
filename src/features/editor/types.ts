@@ -90,24 +90,6 @@ export const FONT_SIZE = 50;
 export const FONT_WEIGHT = 400;
 export const FONT_STYLE = "normal";
 
-export type CornerStyleType = "circle" | "rect" | undefined;
-export const CONTROL_CORNER_COLOR = "rgba(255, 255, 255, 1)";
-export const CONTROL_CORNER_BORDER_COLOR = "rgba(0, 0, 0, 1)";
-export const CONTROL_STROKE_COLOR = "rgba(0, 0, 0, 1)";
-export const CONTROL_CORNER_STYLE: CornerStyleType = "circle";
-
-export const CONTROL_OPTIONS = {
-  cornerColor: CONTROL_CORNER_COLOR,
-  borderColor: CONTROL_CORNER_BORDER_COLOR,
-  cornerStyle: CONTROL_CORNER_STYLE,
-  borderScaleFactor: 1.5,
-  transparentCorners: false,
-  borderOpacityWhenMoving: 1,
-  cornerStrokeColor: CONTROL_STROKE_COLOR,
-  cornerSize: 10,
-  padding: 1,
-};
-
 export const CIRCLE_OPTIONS = {
   radius: 200,
   left: 100,
