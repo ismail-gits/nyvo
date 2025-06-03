@@ -51,9 +51,9 @@ const buildEditor = ({
 
   return {
     delete: () => {
-      canvas.getActiveObjects().forEach((object) => canvas.remove(object))
-      canvas.discardActiveObject()
-      canvas.requestRenderAll()
+      canvas.getActiveObjects().forEach((object) => canvas.remove(object));
+      canvas.discardActiveObject();
+      canvas.requestRenderAll();
     },
     changeFontSize: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -70,7 +70,7 @@ const buildEditor = ({
       const selectedObject = selectedObjects[0];
 
       if (!selectedObject) {
-        return FONT_SIZE
+        return FONT_SIZE;
       }
 
       const value = (selectedObject.get("fontSize") as number) || FONT_SIZE;

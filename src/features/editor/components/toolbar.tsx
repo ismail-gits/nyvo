@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  ActiveTool,
-  Editor,
-  FONT_SIZE,
-  FONT_WEIGHT,
-} from "../types";
+import { ActiveTool, Editor, FONT_SIZE, FONT_WEIGHT } from "../types";
 import { Button } from "@/components/ui/button";
 import Hint from "@/components/hint";
 import { cn } from "@/lib/utils";
