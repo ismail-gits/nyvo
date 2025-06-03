@@ -21,6 +21,7 @@ import {
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
+import { ITextboxOptions } from "fabric/fabric-impl";
 
 const buildEditor = ({
   canvas,
@@ -49,6 +50,29 @@ const buildEditor = ({
   };
 
   return {
+    changeTextAlign: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          object.set({
+            textAlign: value,
+          });
+        }
+
+        canvas.requestRenderAll();
+      });
+    },
+    getActiveTextAlign: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return "left";
+      }
+
+      const value = (selectedObject.get("textAlign") as string) || "left";
+
+      // currently gradients and patterns are not supported
+      return value;
+    },
     changeFontUnderline: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
