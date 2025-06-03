@@ -9,6 +9,8 @@ import {
   Editor,
   FILL_COLOR,
   FONT_FAMILY,
+  FONT_STYLE,
+  FONT_WEIGHT,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
@@ -47,6 +49,98 @@ const buildEditor = ({
   };
 
   return {
+    changeFontUnderline: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          object.set({
+            underline: value,
+          });
+        }
+
+        canvas.requestRenderAll();
+      });
+    },
+    getActiveFontUnderline: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+
+      const value = (selectedObject.get("underline") as boolean) || false;
+
+      // currently gradients and patterns are not supported
+      return value;
+    },
+    changeFontLinethrough: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          object.set({
+            linethrough: value,
+          });
+        }
+
+        canvas.requestRenderAll();
+      });
+    },
+    getActiveFontLinethrough: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+
+      const value = (selectedObject.get("linethrough") as boolean) || false;
+
+      // currently gradients and patterns are not supported
+      return value;
+    },
+    changeFontStyle: (fontStyle: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          object.set({
+            fontStyle,
+          });
+        }
+
+        canvas.requestRenderAll();
+      });
+    },
+    getActiveFontStyle: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return FONT_STYLE;
+      }
+
+      const value = (selectedObject.get("fontStyle") as string) || FONT_STYLE;
+
+      // currently gradients and patterns are not supported
+      return value;
+    },
+    changeFontWeight: (fontWeight: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          object.set({
+            fontWeight,
+          });
+        }
+
+        canvas.requestRenderAll();
+      });
+    },
+    getActiveFontWeight: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return FONT_WEIGHT;
+      }
+
+      const value = (selectedObject.get("fontWeight") as number) || FONT_WEIGHT;
+
+      // currently gradients and patterns are not supported
+      return value;
+    },
     getActiveFontFamily: () => {
       const selectedObject = selectedObjects[0];
 
@@ -54,7 +148,7 @@ const buildEditor = ({
         return fontFamily;
       }
 
-      const value = selectedObject.get("fontFamily") || fontFamily;
+      const value = (selectedObject.get("fontFamily") as string) || fontFamily;
 
       // currently gradients and patterns are not supported
       return value;
@@ -90,7 +184,7 @@ const buildEditor = ({
         return 1;
       }
 
-      const opacity = selectedObject.get("opacity") || 1;
+      const opacity = (selectedObject.get("opacity") as number) || 1;
 
       return opacity;
     },

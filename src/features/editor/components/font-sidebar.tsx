@@ -17,7 +17,7 @@ const FontSideBar = ({
   activeTool,
   onChangeActiveTool,
 }: FontSideBarProps) => {
-  const activeFont = editor?.getActiveFontFamily()
+  const activeFont = editor?.getActiveFontFamily();
 
   const onClose = () => {
     onChangeActiveTool("select");
@@ -30,7 +30,10 @@ const FontSideBar = ({
         activeTool === "font" ? "visible" : "hidden"
       )}
     >
-      <ToolSidebarHeader title="Font" description="Modify the font of your text" />
+      <ToolSidebarHeader
+        title="Font"
+        description="Modify the font of your text"
+      />
       <ScrollArea className="flex-1 overflow-hidden">
         <div className="p-4 space-y-2 border-b">
           {fonts.map((font: string) => (
@@ -45,7 +48,7 @@ const FontSideBar = ({
               style={{
                 fontFamily: font,
                 fontSize: "16px",
-                padding: "7px 16px"
+                padding: "7px 16px",
               }}
               onClick={() => editor?.changeFontFamily(font)}
             >

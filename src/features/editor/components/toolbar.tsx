@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { ActiveTool, Editor } from "../types";
+import { ActiveTool, Editor, FONT_STYLE, FONT_WEIGHT } from "../types";
 import { Button } from "@/components/ui/button";
 import Hint from "@/components/hint";
 import { cn } from "@/lib/utils";
 import { BsBorderWidth } from "react-icons/bs";
-import { RxTransparencyGrid } from "react-icons/rx"
+import { RxTransparencyGrid } from "react-icons/rx";
 import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
 import { isTextType } from "../utils";
+import {
+  FaBold,
+  FaItalic,
+  FaStrikethrough,
+  FaUnderline,
+} from "react-icons/fa6";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -15,9 +21,23 @@ interface ToolbarProps {
 }
 
 const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
-  const fillColor = editor?.getActiveFillColor();
-  const strokeColor = editor?.getActiveStrokeColor();
-  const fontFamily = editor?.getActiveFontFamily();
+  const initialFillColor = editor?.getActiveFillColor();
+  const intialStrokeColor = editor?.getActiveStrokeColor();
+  const initialFontFamily = editor?.getActiveFontFamily();
+  const intialFontWeight = editor?.getActiveFontWeight() || FONT_WEIGHT;
+  const initialFontStyle = editor?.getActiveFontStyle();
+  const initialFontLinethrough = editor?.getActiveFontLinethrough();
+  const initialFontUnderline = editor?.getActiveFontUnderline();
+
+  const [properties, setProperties] = useState({
+    fillColor: initialFillColor,
+    strokeColor: intialStrokeColor,
+    fontFamily: initialFontFamily,
+    fontWeight: intialFontWeight,
+    fontStyle: initialFontStyle,
+    fontLinethrough: initialFontLinethrough,
+    fontUnderline: initialFontUnderline,
+  });
 
   if (editor?.selectedObjects.length === 0) {
     return (
@@ -25,12 +45,66 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
     );
   }
 
+  const selectedObject = editor?.selectedObjects[0];
   const selectedObjectType = editor?.selectedObjects[0].type;
   const isText = isTextType(selectedObjectType);
 
-  const [properties, setProperties] = useState({
-    fillColor,
-  });
+  const toggleBold = () => {
+    if (!selectedObject) {
+      return;
+    }
+
+    const newValue = properties.fontWeight > 500 ? 500 : 700;
+    editor.changeFontWeight(newValue);
+
+    setProperties({
+      ...properties,
+      fontWeight: newValue,
+    });
+  };
+
+  const toggleItalic = () => {
+    if (!selectedObject) {
+      return;
+    }
+
+    const isItalic = properties.fontStyle === "italic";
+    const newValue = isItalic ? "normal" : "italic";
+    editor.changeFontStyle(newValue);
+
+    setProperties({
+      ...properties,
+      fontStyle: newValue,
+    });
+  };
+
+  const toggleLinethrough = () => {
+    if (!selectedObject) {
+      return;
+    }
+
+    const newValue = !properties.fontLinethrough;
+    editor.changeFontLinethrough(newValue);
+
+    setProperties({
+      ...properties,
+      fontLinethrough: newValue,
+    });
+  };
+
+  const toggleUnderline = () => {
+    if (!selectedObject) {
+      return;
+    }
+
+    const newValue = !properties.fontUnderline;
+    editor.changeFontUnderline(newValue);
+
+    setProperties({
+      ...properties,
+      fontUnderline: newValue,
+    });
+  };
 
   return (
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
@@ -47,7 +121,7 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
             <div
               className="rounded-sm size-4 border"
               style={{
-                backgroundColor: fillColor,
+                backgroundColor: properties.fillColor,
               }}
             />
           </Button>
@@ -67,8 +141,66 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
                 activeTool === "font" && "bg-gray-100"
               )}
             >
-              <div className="max-w-[100px] truncate">{fontFamily}</div>
+              <div className="max-w-[100px] truncate">
+                {properties.fontFamily}
+              </div>
               <ChevronDown className="size-4 ml-1 shrink-0" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Bold" side="bottom">
+            <Button
+              onClick={toggleBold}
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(properties.fontWeight > 500 && "bg-gray-100")}
+            >
+              <FaBold className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Italic" side="bottom">
+            <Button
+              onClick={toggleItalic}
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(properties.fontStyle === "italic" && "bg-gray-100")}
+            >
+              <FaItalic className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Underline" side="bottom">
+            <Button
+              onClick={toggleUnderline}
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(properties.fontUnderline && "bg-gray-100")}
+            >
+              <FaUnderline className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Strike" side="bottom">
+            <Button
+              onClick={toggleLinethrough}
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(properties.fontLinethrough && "bg-gray-100")}
+            >
+              <FaStrikethrough className="size-4" />
             </Button>
           </Hint>
         </div>
@@ -87,7 +219,7 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
               <div
                 className="rounded-sm size-4 border-2 bg-white"
                 style={{
-                  borderColor: strokeColor,
+                  borderColor: properties.strokeColor,
                 }}
               />
             </Button>

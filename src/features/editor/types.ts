@@ -87,6 +87,8 @@ export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = [];
 export const FONT_FAMILY = "Arial";
 export const FONT_SIZE = 50;
+export const FONT_WEIGHT = 400;
+export const FONT_STYLE = "normal";
 
 export type CornerStyleType = "circle" | "rect" | undefined;
 export const CONTROL_CORNER_COLOR = "rgba(255, 255, 255, 1)";
@@ -175,6 +177,14 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  changeFontUnderline: (value: boolean) => void;
+  getActiveFontUnderline: () => boolean;
+  changeFontLinethrough: (value: boolean) => void;
+  getActiveFontLinethrough: () => boolean;
+  getActiveFontStyle: () => string;
+  changeFontStyle: (fontStyle: string) => void;
+  getActiveFontWeight: () => number;
+  changeFontWeight: (fontWeight: number) => void;
   getActiveFontFamily: () => string;
   changeFontFamily: (value: string) => void;
   addText: (value: string, options?: Partial<fabric.TextboxProps>) => void;
