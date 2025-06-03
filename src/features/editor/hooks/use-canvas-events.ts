@@ -23,7 +23,7 @@ export const useCanvasEvents = ({
       });
       canvas.on("selection:cleared", () => {
         setSelectedObjects([]);
-        clearSelectionCallback?.()
+        clearSelectionCallback?.();
       });
     }
 
@@ -38,7 +38,7 @@ export const useCanvasEvents = ({
         });
         canvas.off("selection:cleared", () => {
           setSelectedObjects([]);
-          clearSelectionCallback?.()
+          clearSelectionCallback?.();
         });
       }
     };

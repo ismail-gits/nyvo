@@ -14,6 +14,7 @@ import StrokeColorSidebar from "./stroke-color-sidebar";
 import StrokeWidthSidebar from "./stroke-width-sidebar";
 import OpacitySidebar from "./opacity-sidebar";
 import TextSidebar from "./text-sidebar";
+import FontSideBar from "./font-sidebar";
 
 const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -54,7 +55,7 @@ const Editor = () => {
     const canvas = new fabric.Canvas(canvasRef.current!, {
       controlsAboveOverlay: true,
       preserveObjectStacking: true,
-      enableRetinaScaling: true
+      enableRetinaScaling: true,
     });
 
     init({
@@ -101,6 +102,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <TextSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <FontSideBar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

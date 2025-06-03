@@ -1,6 +1,37 @@
 import * as fabric from "fabric";
 import material from "material-colors";
 
+export const fonts = [
+  "Arial",
+  "Arial Black",
+  "Bookman",
+  "Brush Script MT",
+  "Calibri",
+  "Candara",
+  "Comic Sans MS",
+  "Consolas",
+  "Constantia",
+  "Corbel",
+  "Courier New",
+  "Franklin Gothic Medium",
+  "Garamond",
+  "Geneva",
+  "Georgia",
+  "Helvetica",
+  "Impact",
+  "Lucida Console",
+  "Lucida Sans Unicode",
+  "Palatino",
+  "Perpetua",
+  "Rockwell",
+  "Segoe UI",
+  "Sylfaen",
+  "Tahoma",
+  "Times New Roman",
+  "Trebuchet MS",
+  "Verdana",
+];
+
 export const selectionDependentTools = [
   "fill",
   "font",
@@ -139,9 +170,13 @@ export type BuildEditorProps = {
   selectedObjects: fabric.FabricObject[];
   strokeDashArray: number[];
   setStrokeDashArray: (strokeDashedArray: number[]) => void;
+  fontFamily: string;
+  setFontFamily: (fontFamily: string) => void;
 };
 
 export interface Editor {
+  getActiveFontFamily: () => string;
+  changeFontFamily: (value: string) => void;
   addText: (value: string, options?: Partial<fabric.TextboxProps>) => void;
   changeOpacity: (opacity: number) => void;
   getActiveOpacity: () => number;
