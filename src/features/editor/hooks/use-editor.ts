@@ -222,6 +222,7 @@ const buildEditor = ({
         ...TEXT_OPTIONS,
         ...options,
         fill: fillColor,
+        borderColor: "black"
       });
 
       addToCanvas(object);

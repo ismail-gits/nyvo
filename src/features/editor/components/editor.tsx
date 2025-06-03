@@ -16,18 +16,27 @@ import OpacitySidebar from "./opacity-sidebar";
 import TextSidebar from "./text-sidebar";
 import FontSideBar from "./font-sidebar";
 
-// Global fabric controls customization
-const defaultFabricObject = fabric.FabricObject.ownDefaults
-defaultFabricObject.cornerStyle = "circle"
-defaultFabricObject.borderColor = "rgba(0, 0, 0, 1)"
-defaultFabricObject.cornerColor = "rgba(255, 255, 255, 1)"
-defaultFabricObject.borderScaleFactor = 1.5
-defaultFabricObject.transparentCorners = false
-defaultFabricObject.borderOpacityWhenMoving = 1
-defaultFabricObject.cornerStrokeColor = "rgba(0, 0, 0, 1)"
-defaultFabricObject.cornerSize = 10
-defaultFabricObject.padding = 1
+// Global fabric object customizations
+// Need to be set before creating canvas
 
+// Controls customization
+const defaultFabricObject = fabric.FabricObject.ownDefaults;
+defaultFabricObject.cornerStyle = "circle";
+defaultFabricObject.borderColor = "rgba(0, 0, 0, 1)";
+defaultFabricObject.cornerColor = "rgba(255, 255, 255, 1)";
+defaultFabricObject.borderScaleFactor = 1.5;
+defaultFabricObject.transparentCorners = false;
+defaultFabricObject.borderOpacityWhenMoving = 1;
+defaultFabricObject.cornerStrokeColor = "rgba(0, 0, 0, 1)";
+defaultFabricObject.cornerSize = 10;
+defaultFabricObject.padding = 1;
+
+// Text customization
+fabric.IText.ownDefaults.editingBorderColor = "black";
+fabric.IText.ownDefaults.cursorColor = "black";
+fabric.IText.ownDefaults.cursorDelay = 200;
+fabric.IText.ownDefaults.cursorDuration = 300;
+fabric.IText.ownDefaults.padding = 4;
 
 const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
