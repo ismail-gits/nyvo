@@ -40,7 +40,7 @@ const TextSidebar = ({
             size={"lg"}
             onClick={() =>
               editor?.addText("Heading", {
-                fontSize: 80,
+                fontSize: 96,
                 fontWeight: 700,
               })
             }
@@ -53,7 +53,7 @@ const TextSidebar = ({
             size={"lg"}
             onClick={() =>
               editor?.addText("Subheading", {
-                fontSize: 44,
+                fontSize: 60,
                 fontWeight: 600,
               })
             }
@@ -66,7 +66,7 @@ const TextSidebar = ({
             size={"lg"}
             onClick={() =>
               editor?.addText("Paragraph", {
-                fontSize: 32,
+                fontSize: 45,
                 fontWeight: 500,
               })
             }
