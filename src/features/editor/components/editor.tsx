@@ -32,11 +32,12 @@ defaultFabricObject.cornerSize = 10;
 defaultFabricObject.padding = 1;
 
 // Text customization
-fabric.IText.ownDefaults.editingBorderColor = "black";
-fabric.IText.ownDefaults.cursorColor = "black";
-fabric.IText.ownDefaults.cursorDelay = 200;
-fabric.IText.ownDefaults.cursorDuration = 300;
-fabric.IText.ownDefaults.padding = 4;
+const defaultITextObject = fabric.IText.ownDefaults
+defaultITextObject.editingBorderColor = "black";
+defaultITextObject.cursorColor = "black";
+defaultITextObject.cursorDelay = 200;
+defaultITextObject.cursorDuration = 300;
+defaultITextObject.padding = 4;
 
 const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
