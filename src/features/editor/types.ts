@@ -1,6 +1,32 @@
 import * as fabric from "fabric";
 import material from "material-colors";
 
+export const filters = [
+  "none",
+  "polaroid",
+  "sepia",
+  "kodachrome",
+  "contrast",
+  "brightness",
+  "grayscale",
+  "brownie",
+  "vintage",
+  "technicolor",
+  "pixelate",
+  "invert",
+  "blur",
+  "sharpen",
+  "emboss",
+  "removecolor",
+  "blacknwhite",
+  "vibrance",
+  "blendcolor",
+  "huerotate",
+  "resize",
+  "saturation",
+  "gamma"
+]
+
 export const fonts = [
   "Arial",
   "Arial Black",
@@ -159,7 +185,9 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
-  addImage: (url: string) => void
+  getActiveImageFilters: () => string[]
+  changeImageFilter: (filter: string) => void;
+  addImage: (url: string) => void;
   delete: () => void;
   changeFontSize: (value: number) => void;
   getActiveFontSize: () => number;

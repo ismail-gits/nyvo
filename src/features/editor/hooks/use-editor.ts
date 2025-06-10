@@ -20,7 +20,7 @@ import {
   UseEditorProps,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
-import { isTextType } from "../utils";
+import { createFilter, isTextType } from "../utils";
 
 const buildEditor = ({
   canvas,
@@ -49,24 +49,50 @@ const buildEditor = ({
   };
 
   return {
+    getActiveImageFilters: () => {
+      const selectedObject = selectedObjects[0] as fabric.FabricImage
+
+      console.log("1: " + selectedObject)
+
+      if (!selectedObject) {
+        return []
+      }
+
+      console.log("2: " + selectedObject)
+      console.log("Filters: " + selectedObject.get("filters"))
+
+      return (selectedObject.filters || [])
+        .filter((f) => f != null)
+        .map((f) => (f as any)._id || f.type)
+    },
+    changeImageFilter: (filter: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (object.type === "image") {
+          const imageObject = object as fabric.FabricImage;
+
+          const effect = createFilter(filter);
+
+          imageObject.filters = effect ? [effect] : [];
+          imageObject.applyFilters();
+
+          canvas.requestRenderAll();
+        }
+      });
+    },
     addImage: async (url: string) => {
       try {
-        const image = await fabric.FabricImage.fromURL(
-          url,
-          {
-            crossOrigin: "anonymous"
-          }
-        )
+        const image = await fabric.FabricImage.fromURL(url, {
+          crossOrigin: "anonymous",
+        });
 
-        console.log("Image image - SUCCESS")
+        console.log("Image image - SUCCESS");
 
-        image.scaleToWidth(workspace?.width || 0)
-        image.scaleToHeight(workspace?.height || 0)
+        image.scaleToWidth(workspace?.width || 0);
+        image.scaleToHeight(workspace?.height || 0);
 
-        addToCanvas(image)
-      }
-      catch(error) {
-        console.log("Image loading failed: " + error)
+        addToCanvas(image);
+      } catch (error) {
+        console.log("Image loading failed: " + error);
       }
     },
     delete: () => {
@@ -219,8 +245,7 @@ const buildEditor = ({
       }
 
       const value = (selectedObject.get("fontFamily") as string) || fontFamily;
-
-      // currently gradients and patterns are not supported
+      
       return value;
     },
     changeFontFamily: (value: string) => {
@@ -242,7 +267,7 @@ const buildEditor = ({
         ...TEXT_OPTIONS,
         ...options,
         fill: fillColor,
-        borderColor: "black"
+        borderColor: "black",
       });
 
       addToCanvas(object);
