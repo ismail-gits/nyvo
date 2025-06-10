@@ -49,6 +49,26 @@ const buildEditor = ({
   };
 
   return {
+    addImage: async (url: string) => {
+      try {
+        const image = await fabric.FabricImage.fromURL(
+          url,
+          {
+            crossOrigin: "anonymous"
+          }
+        )
+
+        console.log("Image image - SUCCESS")
+
+        image.scaleToWidth(workspace?.width || 0)
+        image.scaleToHeight(workspace?.height || 0)
+
+        addToCanvas(image)
+      }
+      catch(error) {
+        console.log("Image loading failed: " + error)
+      }
+    },
     delete: () => {
       canvas.getActiveObjects().forEach((object) => canvas.remove(object));
       canvas.discardActiveObject();

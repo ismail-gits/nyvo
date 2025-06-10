@@ -15,6 +15,7 @@ import StrokeWidthSidebar from "./stroke-width-sidebar";
 import OpacitySidebar from "./opacity-sidebar";
 import TextSidebar from "./text-sidebar";
 import FontSideBar from "./font-sidebar";
+import ImageSidebar from "./image-sidebar";
 
 // Global fabric object customizations
 // Need to be set before creating canvas
@@ -130,6 +131,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <FontSideBar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <ImageSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

@@ -6,17 +6,19 @@ export const useGetImages = () => {
   const query = useQuery({
     queryKey: ["images"],
     queryFn: async () => {
-      const response = await client.api.images.$get()
+      const response = await client.api.images.$get();
+
+      console.log(response)
 
       if (!response.ok) {
-        throw new Error("Failed to fetch images")
+        throw new Error("Failed to fetch images");
       }
 
-      const { data } = await response.json()
+      const { data } = await response.json();
 
-      return data
-    }
-  })
+      return data;
+    },
+  });
 
-  return query
-}
+  return query;
+};
