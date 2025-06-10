@@ -50,15 +50,15 @@ const buildEditor = ({
 
   return {
     getActiveImageFilters: () => {
-      const selectedObject = selectedObjects[0] as fabric.FabricImage
+      const selectedObject = selectedObjects[0] as fabric.FabricImage;
 
       if (!selectedObject) {
-        return []
+        return [];
       }
 
       return (selectedObject.filters || [])
         .filter((f) => f != null)
-        .map((f) => (f as any)._id || f.type)
+        .map((f) => (f as any)._id || f.type);
     },
     changeImageFilter: (filter: string) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -240,7 +240,7 @@ const buildEditor = ({
       }
 
       const value = (selectedObject.get("fontFamily") as string) || fontFamily;
-      
+
       return value;
     },
     changeFontFamily: (value: string) => {

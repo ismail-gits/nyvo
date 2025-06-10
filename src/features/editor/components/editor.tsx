@@ -17,6 +17,7 @@ import TextSidebar from "./text-sidebar";
 import FontSideBar from "./font-sidebar";
 import ImageSidebar from "./image-sidebar";
 import FilterSidebar from "./filter-sidebar";
+import AiSidebar from "./ai-sidebar";
 
 // Global fabric object customizations
 // Need to be set before creating canvas
@@ -34,7 +35,7 @@ defaultFabricObject.cornerSize = 10;
 defaultFabricObject.padding = 1;
 
 // Text customization
-const defaultITextObject = fabric.IText.ownDefaults
+const defaultITextObject = fabric.IText.ownDefaults;
 defaultITextObject.editingBorderColor = "black";
 defaultITextObject.cursorColor = "black";
 defaultITextObject.cursorDelay = 200;
@@ -142,6 +143,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <FilterSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <AiSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

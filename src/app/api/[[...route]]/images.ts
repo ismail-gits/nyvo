@@ -11,8 +11,6 @@ const app = new Hono()
       count: DEFAULT_COUNT
     })
 
-
-
     if (images.errors) {
       return c.json({ error: "Something went wrong" }, 400)
     }
