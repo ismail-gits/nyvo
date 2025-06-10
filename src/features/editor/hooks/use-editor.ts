@@ -52,14 +52,9 @@ const buildEditor = ({
     getActiveImageFilters: () => {
       const selectedObject = selectedObjects[0] as fabric.FabricImage
 
-      console.log("1: " + selectedObject)
-
       if (!selectedObject) {
         return []
       }
-
-      console.log("2: " + selectedObject)
-      console.log("Filters: " + selectedObject.get("filters"))
 
       return (selectedObject.filters || [])
         .filter((f) => f != null)
