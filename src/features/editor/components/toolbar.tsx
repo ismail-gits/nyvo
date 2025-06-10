@@ -12,6 +12,7 @@ import {
   ArrowDown,
   ArrowUp,
   ChevronDown,
+  SquareSplitHorizontal,
   Trash,
 } from "lucide-react";
 import { TbColorFilter } from "react-icons/tb"
@@ -344,6 +345,20 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
               className={cn(activeTool === "filter" && "bg-gray-100")}
             >
               <TbColorFilter className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {isImage && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Remove background" side="bottom">
+            <Button
+              onClick={() => onChangeActiveTool("remove-bg")}
+              size={"icon"}
+              variant={"ghost"}
+              className={cn(activeTool === "remove-bg" && "bg-gray-100")}
+            >
+              <SquareSplitHorizontal className="size-4" />
             </Button>
           </Hint>
         </div>

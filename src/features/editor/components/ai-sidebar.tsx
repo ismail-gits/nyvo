@@ -22,7 +22,7 @@ const AiSidebar = ({
 }: AiSidebarProps) => {
   const mutation = useGenerateImage();
 
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState("");
 
   const onClose = () => {
     onChangeActiveTool("select");
@@ -33,11 +33,14 @@ const AiSidebar = ({
 
     // TODO: Block with paywall
 
-    mutation.mutate({ prompt: value }, {
-      onSuccess: (data) => {
-        editor?.addImage(data.imageUrl)
+    mutation.mutate(
+      { prompt: value },
+      {
+        onSuccess: (data) => {
+          editor?.addImage(data.imageUrl);
+        },
       }
-    })
+    );
   };
 
   return (
