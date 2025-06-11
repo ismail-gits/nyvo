@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod/v4";
-import { generateImage, removeBackground } from "@/lib/gemini";
+import { generateImage } from "@/lib/gemini";
+import { removeBackground } from "@/lib/removebg";
 
 const app = new Hono()
   .post(
