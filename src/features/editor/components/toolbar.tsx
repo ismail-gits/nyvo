@@ -402,8 +402,8 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
         <Hint label="Duplicate" side="bottom">
           <Button
             onClick={async () => {
-              await editor?.copy()
-              await editor?.paste()
+              await editor?.copy();
+              await editor?.paste();
             }}
             size={"icon"}
             variant={"ghost"}

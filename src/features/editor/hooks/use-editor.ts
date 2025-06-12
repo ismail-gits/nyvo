@@ -38,7 +38,7 @@ const buildEditor = ({
   fontFamily,
   setFontFamily,
   copy,
-  paste
+  paste,
 }: BuildEditorProps): Editor => {
   const center = (object: fabric.FabricObject) => {
     const centerPoint = workspace?.getCenterPoint();
@@ -52,6 +52,23 @@ const buildEditor = ({
   };
 
   return {
+    enableDrawingMode: () => {
+      canvas.discardActiveObject();
+
+      canvas.isDrawingMode = true;
+
+      if (!canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+      }
+
+      canvas.freeDrawingBrush.width = strokeWidth;
+      canvas.freeDrawingBrush.color = strokeColor;
+
+      canvas.requestRenderAll();
+    },
+    disableDrawingMode: () => {
+      canvas.isDrawingMode = false;
+    },
     copy,
     paste,
     getActiveImageFilters: () => {
@@ -337,6 +354,11 @@ const buildEditor = ({
           stroke: color,
         });
       });
+
+      if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.color = color;
+      }
+
       canvas.requestRenderAll();
     },
     changeStrokeWidth: (width: number) => {
@@ -347,6 +369,11 @@ const buildEditor = ({
         });
         object.setCoords();
       });
+
+      if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.width = width;
+      }
+
       canvas.requestRenderAll();
     },
     changeStrokeDashArray: (strokeDashedArray: number[]) => {
@@ -528,7 +555,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
         fontFamily,
         setFontFamily,
         copy,
-        paste
+        paste,
       });
     }
 
@@ -542,7 +569,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     strokeDashArray,
     fontFamily,
     copy,
-    paste
+    paste,
   ]);
 
   const init = useCallback(

@@ -187,6 +187,8 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  enableDrawingMode: () => void;
+  disableDrawingMode: () => void;
   copy: () => Promise<void>;
   paste: () => Promise<void>;
   getActiveImageFilters: () => string[];
