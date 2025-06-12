@@ -7,6 +7,7 @@ import { removeBackground } from "@/lib/removebg";
 const app = new Hono()
   .post(
     "/remove-bg",
+    // Add verification
     zValidator(
       "json",
       z.object({

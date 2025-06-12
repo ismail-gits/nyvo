@@ -21,6 +21,7 @@ import {
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { createFilter, isTextType } from "../utils";
+import { useClipboard } from "./use-clipboard";
 
 const buildEditor = ({
   canvas,
@@ -36,6 +37,8 @@ const buildEditor = ({
   setStrokeDashArray,
   fontFamily,
   setFontFamily,
+  copy,
+  paste
 }: BuildEditorProps): Editor => {
   const center = (object: fabric.FabricObject) => {
     const centerPoint = workspace?.getCenterPoint();
@@ -49,6 +52,8 @@ const buildEditor = ({
   };
 
   return {
+    copy,
+    paste,
     getActiveImageFilters: () => {
       const selectedObject = selectedObjects[0] as fabric.FabricImage;
 
@@ -492,6 +497,8 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
 
+  const { copy, paste } = useClipboard({ canvas });
+
   useAutoResize({
     canvas,
     container,
@@ -520,6 +527,8 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
         setStrokeDashArray,
         fontFamily,
         setFontFamily,
+        copy,
+        paste
       });
     }
 
@@ -532,6 +541,8 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     selectedObjects,
     strokeDashArray,
     fontFamily,
+    copy,
+    paste
   ]);
 
   const init = useCallback(

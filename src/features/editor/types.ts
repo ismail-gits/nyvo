@@ -24,8 +24,8 @@ export const filters = [
   "huerotate",
   "resize",
   "saturation",
-  "gamma"
-]
+  "gamma",
+];
 
 export const fonts = [
   "Arial",
@@ -169,6 +169,8 @@ export type UseEditorProps = {
 };
 
 export type BuildEditorProps = {
+  copy: () => Promise<void>;
+  paste: () => Promise<void>;
   canvas: fabric.Canvas;
   workspace: fabric.Rect | null;
   fillColor: string;
@@ -185,7 +187,9 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
-  getActiveImageFilters: () => string[]
+  copy: () => Promise<void>;
+  paste: () => Promise<void>;
+  getActiveImageFilters: () => string[];
   changeImageFilter: (filter: string) => void;
   addImage: (url: string) => void;
   delete: () => void;

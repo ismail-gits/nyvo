@@ -12,10 +12,11 @@ import {
   ArrowDown,
   ArrowUp,
   ChevronDown,
+  Copy,
   SquareSplitHorizontal,
   Trash,
 } from "lucide-react";
-import { TbColorFilter } from "react-icons/tb"
+import { TbColorFilter } from "react-icons/tb";
 import { isImageType, isTextType } from "../utils";
 import {
   FaBold,
@@ -394,6 +395,21 @@ const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
             className={cn(activeTool === "opacity" && "bg-gray-100")}
           >
             <RxTransparencyGrid className="size-4" />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Duplicate" side="bottom">
+          <Button
+            onClick={async () => {
+              await editor?.copy()
+              await editor?.paste()
+            }}
+            size={"icon"}
+            variant={"ghost"}
+            className={cn(activeTool === "opacity" && "bg-gray-100")}
+          >
+            <Copy className="size-4" />
           </Button>
         </Hint>
       </div>
