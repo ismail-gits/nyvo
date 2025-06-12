@@ -56,7 +56,7 @@ export const useAutoResize = ({
     const canvasCenter = canvas.getCenterPoint(); // fabric.Point
 
     // Zoom ratio to leave some padding
-    const zoomRatio = 0.9; // Adjusted slightly, 0.85 is also fine
+    const zoomRatio = 0.9; 
 
     // Ensure workspace has dimensions before trying to fit it
     if (!workspace.width || !workspace.height) {

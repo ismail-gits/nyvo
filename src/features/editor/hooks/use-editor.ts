@@ -53,17 +53,38 @@ const buildEditor = ({
   };
 
   return {
-    getWorkspace: () => {
-      return workspace
+    autoZoom,
+    zoomIn: () => {
+      let zoomRatio = canvas.getZoom();
+      zoomRatio += 0.05;
+      const canvasCenter = canvas.getCenterPoint();
+
+      canvas.zoomToPoint(
+        new fabric.Point(canvasCenter.x, canvasCenter.y),
+        zoomRatio > 1.3 ? 1.3 : zoomRatio
+      );
     },
-    changeSize: ( size: {width: number, height: number}) => {
-      workspace?.set(size)
-      autoZoom()
+    zoomOut: () => {
+      let zoomRatio = canvas.getZoom();
+      zoomRatio -= 0.05;
+      const canvasCenter = canvas.getCenterPoint();
+
+      canvas.zoomToPoint(
+        new fabric.Point(canvasCenter.x, canvasCenter.y),
+        zoomRatio < 0.2 ? 0.2 : zoomRatio
+      );
+    },
+    getWorkspace: () => {
+      return workspace;
+    },
+    changeSize: (size: { width: number; height: number }) => {
+      workspace?.set(size);
+      autoZoom();
       // TODO: Save
     },
     changeBackground: (value: string) => {
-      workspace?.set({ fill: value })
-      canvas.requestRenderAll()
+      workspace?.set({ fill: value });
+      canvas.requestRenderAll();
       // TODO: Save
     },
     enableDrawingMode: () => {
