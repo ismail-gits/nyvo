@@ -22,9 +22,10 @@ const DrawSidebar = ({
   onChangeActiveTool,
 }: DrawSidebarProps) => {
   const colorValue = editor?.getActiveStrokeColor() || STROKE_COLOR;
-  const widthValue = editor?.getActiveStrokeWidth() || STROKE_WIDTH
+  const widthValue = editor?.getActiveStrokeWidth() || STROKE_WIDTH;
 
   const onClose = () => {
+    editor?.disableDrawingMode();
     onChangeActiveTool("select");
   };
 
