@@ -30,9 +30,11 @@ export const useClipboard = ({ canvas }: UseClipboardProps) => {
 
     canvas.discardActiveObject();
 
-    cloned.left = cloned.left + 10;
-    cloned.top = cloned.top + 10;
-    cloned.evented = true;
+    cloned.set({
+      left: cloned.left + 10,
+      top: cloned.top + 10,
+      evented: true,
+    });
 
     if (cloned instanceof fabric.ActiveSelection) {
       const activeSelection = cloned as fabric.ActiveSelection;

@@ -39,6 +39,7 @@ const buildEditor = ({
   setFontFamily,
   copy,
   paste,
+  autoZoom,
 }: BuildEditorProps): Editor => {
   const center = (object: fabric.FabricObject) => {
     const centerPoint = workspace?.getCenterPoint();
@@ -52,6 +53,19 @@ const buildEditor = ({
   };
 
   return {
+    getWorkspace: () => {
+      return workspace
+    },
+    changeSize: ( size: {width: number, height: number}) => {
+      workspace?.set(size)
+      autoZoom()
+      // TODO: Save
+    },
+    changeBackground: (value: string) => {
+      workspace?.set({ fill: value })
+      canvas.requestRenderAll()
+      // TODO: Save
+    },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
 
@@ -526,7 +540,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
 
   const { copy, paste } = useClipboard({ canvas });
 
-  useAutoResize({
+  const { autoZoom } = useAutoResize({
     canvas,
     container,
     workspace,
@@ -556,6 +570,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
         setFontFamily,
         copy,
         paste,
+        autoZoom,
       });
     }
 
@@ -570,6 +585,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     fontFamily,
     copy,
     paste,
+    autoZoom,
   ]);
 
   const init = useCallback(

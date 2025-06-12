@@ -158,7 +158,5 @@ export const useAutoResize = ({
     };
   }, [canvas, container, autoZoom]); // autoZoom is now a dependency
 
-  // The hook might not need to return autoZoom if it's only used internally by the ResizeObserver,
-  // but it can be useful if you want to trigger it manually from outside.
   return { autoZoom };
 };

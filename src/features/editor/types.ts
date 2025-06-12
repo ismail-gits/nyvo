@@ -169,6 +169,7 @@ export type UseEditorProps = {
 };
 
 export type BuildEditorProps = {
+  autoZoom: () => void;
   copy: () => Promise<void>;
   paste: () => Promise<void>;
   canvas: fabric.Canvas;
@@ -187,6 +188,9 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  getWorkspace: () => fabric.Rect | null,
+  changeSize: (size: { width: number; height: number }) => void;
+  changeBackground: (value: string) => void;
   enableDrawingMode: () => void;
   disableDrawingMode: () => void;
   copy: () => Promise<void>;
