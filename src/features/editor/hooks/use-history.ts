@@ -6,7 +6,6 @@ interface UseHistoryProps {
   canvas: fabric.Canvas | null;
 }
 
-
 export const useHistory = ({ canvas }: UseHistoryProps) => {
   const [historyIndex, setHistoryIndex] = useState(0);
   const canvasHistory = useRef<string[]>([]);
@@ -20,61 +19,55 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
     return historyIndex < canvasHistory.current.length - 1;
   }, [historyIndex]);
 
-
   const save = useCallback(
     (skip: boolean = false) => {
-      console.log("save")
-
       if (!canvas) {
         return;
       }
 
-      const currentState = canvas.toObject(JSON_KEYS)
+      const currentState = canvas.toObject(JSON_KEYS);
       const json = JSON.stringify(currentState);
 
       if (!skip && !skipSave.current) {
         canvasHistory.current.push(json);
-        const newIndex = canvasHistory.current.length - 1
+        const newIndex = canvasHistory.current.length - 1;
         setHistoryIndex(newIndex);
       }
 
       // TODO: Save callback
+      // Save to database
     },
     [canvas]
   );
 
   const undo = useCallback(async () => {
-    console.log("undo")
-
     if (canUndo()) {
-      skipSave.current = true
-      canvas?.clear()
+      skipSave.current = true;
+      canvas?.clear();
 
-      const previousIndex = historyIndex - 1
-      const previousState = JSON.parse(canvasHistory.current[previousIndex])
+      const previousIndex = historyIndex - 1;
+      const previousState = JSON.parse(canvasHistory.current[previousIndex]);
 
-      await canvas?.loadFromJSON(previousState)
-      canvas?.requestRenderAll()
-      setHistoryIndex(previousIndex)
-      skipSave.current = false
+      await canvas?.loadFromJSON(previousState);
+      canvas?.requestRenderAll();
+      setHistoryIndex(previousIndex);
+      skipSave.current = false;
     }
   }, [canvas, historyIndex, canRedo]);
 
   const redo = useCallback(async () => {
-    console.log("redo")
-
     if (canRedo()) {
-      skipSave.current = true
-      canvas?.clear()
-      canvas?.requestRenderAll()
+      skipSave.current = true;
+      canvas?.clear();
+      canvas?.requestRenderAll();
 
-      const nextIndex = historyIndex + 1
-      const nextState = JSON.parse(canvasHistory.current[nextIndex])
+      const nextIndex = historyIndex + 1;
+      const nextState = JSON.parse(canvasHistory.current[nextIndex]);
 
-      await canvas?.loadFromJSON(nextState)
-      canvas?.requestRenderAll()
-      setHistoryIndex(nextIndex)
-      skipSave.current = false
+      await canvas?.loadFromJSON(nextState);
+      canvas?.requestRenderAll();
+      setHistoryIndex(nextIndex);
+      skipSave.current = false;
     }
   }, [canvas, historyIndex, canRedo]);
 
