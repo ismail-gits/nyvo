@@ -1,6 +1,17 @@
 import * as fabric from "fabric";
 import material from "material-colors";
 
+export const JSON_KEYS = [
+  "name",
+  "gradientAngle",
+  "selectable",
+  "hasControls",
+  "linkData",
+  "editable",
+  "extension",
+  "extenstionType",
+];
+
 export const filters = [
   "none",
   "polaroid",
@@ -169,6 +180,11 @@ export type UseEditorProps = {
 };
 
 export type BuildEditorProps = {
+  save: (skip?: boolean) => void;
+  canUndo: () => boolean;
+  canRedo: () => boolean;
+  undo: () => Promise<void>;
+  redo: () => Promise<void>;
   autoZoom: () => void;
   copy: () => Promise<void>;
   paste: () => Promise<void>;
@@ -188,6 +204,10 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  undo: () => Promise<void>;
+  redo: () => Promise<void>;
+  canUndo: () => boolean;
+  canRedo: () => boolean;
   autoZoom: () => void;
   zoomIn: () => void;
   zoomOut: () => void;

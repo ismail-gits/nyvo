@@ -11,6 +11,7 @@ import {
   FONT_SIZE,
   FONT_STYLE,
   FONT_WEIGHT,
+  JSON_KEYS,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
@@ -22,6 +23,7 @@ import {
 import { useCanvasEvents } from "./use-canvas-events";
 import { createFilter, isTextType } from "../utils";
 import { useClipboard } from "./use-clipboard";
+import { useHistory } from "./use-history";
 
 const buildEditor = ({
   canvas,
@@ -40,6 +42,11 @@ const buildEditor = ({
   copy,
   paste,
   autoZoom,
+  save,
+  canUndo,
+  canRedo,
+  undo,
+  redo,
 }: BuildEditorProps): Editor => {
   const center = (object: fabric.FabricObject) => {
     const centerPoint = workspace?.getCenterPoint();
@@ -53,6 +60,10 @@ const buildEditor = ({
   };
 
   return {
+    undo,
+    redo,
+    canUndo,
+    canRedo,
     autoZoom,
     zoomIn: () => {
       let zoomRatio = canvas.getZoom();
@@ -80,12 +91,12 @@ const buildEditor = ({
     changeSize: (size: { width: number; height: number }) => {
       workspace?.set(size);
       autoZoom();
-      // TODO: Save
+      save();
     },
     changeBackground: (value: string) => {
       workspace?.set({ fill: value });
       canvas.requestRenderAll();
-      // TODO: Save
+      save();
     },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
@@ -559,6 +570,9 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
 
+  const { save, canUndo, canRedo, undo, redo, canvasHistory, setHistoryIndex } =
+    useHistory({ canvas });
+
   const { copy, paste } = useClipboard({ canvas });
 
   const { autoZoom } = useAutoResize({
@@ -571,6 +585,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     canvas,
     setSelectedObjects,
     clearSelectionCallback,
+    save,
   });
 
   const editor = useMemo(() => {
@@ -592,6 +607,11 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
         copy,
         paste,
         autoZoom,
+        save,
+        canUndo,
+        undo,
+        canRedo,
+        redo,
       });
     }
 
@@ -607,6 +627,11 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     copy,
     paste,
     autoZoom,
+    save,
+    canUndo,
+    canRedo,
+    undo,
+    redo,
   ]);
 
   const init = useCallback(
@@ -648,25 +673,9 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
       setCanvas(initialCanvas);
       setContainer(initialContainer);
 
-      const rectangle = new fabric.Rect({
-        fill: "blue",
-        width: 200,
-        height: 300,
-        cornerColor: "white",
-        borderColor: "black",
-        cornerStyle: "circle",
-        borderScaleFactor: 1.5,
-        transparentCorners: false,
-        borderOpacityWhenMoving: 1,
-        cornerStrokeColor: "black",
-        cornerSize: 10,
-        padding: 1,
-        stroke: "blue",
-      });
-      // rectangle.cornerStrokeColor = "#3b82f6";
-
-      // initialCanvas.add(rectangle);
-      // initialCanvas.centerObject(rectangle);
+      const currentState = JSON.stringify(initialCanvas.toObject(JSON_KEYS));
+      canvasHistory.current = [currentState];
+      setHistoryIndex(0);
     },
     []
   );

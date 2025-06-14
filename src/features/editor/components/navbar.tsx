@@ -24,15 +24,16 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Hint from "@/components/hint";
 import Logo from "./logo";
-import { ActiveTool } from "../types";
+import { ActiveTool, Editor } from "../types";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
+  editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }
 
-const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
+const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
@@ -72,20 +73,24 @@ const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
         </Hint>
         <Hint label="Undo" side="bottom">
           <Button
+            disabled={!editor?.canUndo()}
             variant={"ghost"}
             size={"icon"}
-            onClick={() => {}} // TODO : Add functionality
-            className="" // TODO: Add dyanmic class
+            onClick={async () => {
+              await editor?.undo();
+            }}
           >
             <Undo2 className="size-4" />
           </Button>
         </Hint>
         <Hint label="Redo" side="bottom">
           <Button
+            disabled={!editor?.canRedo()}
             variant={"ghost"}
             size={"icon"}
-            onClick={() => {}} // TODO : Add functionality
-            className="" // TODO: Add dyanmic class
+            onClick={async () => {
+              await editor?.redo();
+            }}
           >
             <Redo2 className="size-4" />
           </Button>
