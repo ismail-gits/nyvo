@@ -30,6 +30,7 @@ import {
 import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 import { useHotkeys } from "./use-hotkeys";
+import { useWindowEvents } from "./use-window-events";
 
 const buildEditor = ({
   canvas,
@@ -677,6 +678,8 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     copy,
     paste,
   });
+
+  useWindowEvents();
 
   const editor = useMemo(() => {
     if (canvas) {
