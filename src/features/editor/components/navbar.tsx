@@ -113,7 +113,7 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
             <DropdownMenuContent align="end" className="min-w-60">
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} // TODO: Add functionality
+                onClick={() => editor?.saveJson()}
               >
                 <BsFiletypeJson className="size-7" />
                 <div>
@@ -125,7 +125,7 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} // TODO: Add functionality
+                onClick={() => editor?.savePng()}
               >
                 <BsFiletypePng className="size-7" />
                 <div>
@@ -137,11 +137,11 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} // TODO: Add functionality
+                onClick={() => editor?.saveJpeg()} 
               >
                 <BsFiletypeJpg className="size-7" />
                 <div>
-                  <p>JPG</p>
+                  <p>JPEG</p>
                   <p className="text-xs text-muted-foreground">
                     Best for photos and web
                   </p>
@@ -149,7 +149,7 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} // TODO: Add functionality
+                onClick={() => editor?.saveSvg()}
               >
                 <BsFiletypeSvg className="size-7" />
                 <div>
