@@ -1,6 +1,6 @@
 import * as fabric from "fabric";
 import { RGBColor } from "react-color";
-import { v4 } from "uuid"
+import { v4 } from "uuid";
 
 export function transformText(objects: any) {
   if (!objects) {
