@@ -16,10 +16,15 @@ import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useSearchParams } from "next/navigation";
+import { TriangleAlert } from "lucide-react";
 
 const SignInCard = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const params = useSearchParams()
+  const error = params.get("error")
 
   const onCredentialsSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,6 +47,12 @@ const SignInCard = () => {
           Use your email or another service to continue
         </CardDescription>
       </CardHeader>
+      {!!error && (
+        <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive">
+          <TriangleAlert className="size-4"/>
+          <p>Invalid email or password</p>
+        </div>
+      )}
       <CardContent className="space-y-5 px-0 pb-0">
         <form onSubmit={onCredentialsSignIn} className="space-y-4">
           <Input
