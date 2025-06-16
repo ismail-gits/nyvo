@@ -103,7 +103,6 @@ const SignUpCard = () => {
         <Separator />
         <div className="flex flex-col gap-y-2.5">
           <Button
-            disabled={mutation.isPending}
             onClick={() => onProviderSignUp("google")}
             variant={"outline"}
             size={"lg"}
@@ -113,7 +112,6 @@ const SignUpCard = () => {
             Continue with Google
           </Button>
           <Button
-            disabled={mutation.isPending}
             onClick={() => onProviderSignUp("github")}
             variant={"outline"}
             size={"lg"}
