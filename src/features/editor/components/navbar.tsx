@@ -27,6 +27,7 @@ import Hint from "@/components/hint";
 import Logo from "./logo";
 import { ActiveTool, Editor } from "../types";
 import { cn } from "@/lib/utils";
+import UserButton from "@/features/auth/components/user-button";
 
 interface NavbarProps {
   editor: Editor | undefined;
@@ -62,10 +63,10 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="min-w-60">
             <DropdownMenuItem
+              className="cursor-pointer"
               onClick={() => openFilePicker()}
-              className="flex items-center gap-x-2"
             >
-              <BsFiletypeJson className="size-7" />
+              <BsFiletypeJson className="size-7 mr-2" />
               <div>
                 <p>Open</p>
                 <p className="text-xs text-muted-foreground">
@@ -127,10 +128,10 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-60">
               <DropdownMenuItem
-                className="flex items-center gap-x-2"
+                className="cursor-pointer"
                 onClick={() => editor?.saveJson()}
               >
-                <BsFiletypeJson className="size-7" />
+                <BsFiletypeJson className="size-7 mr-2" />
                 <div>
                   <p>JSON</p>
                   <p className="text-xs text-muted-foreground">
@@ -139,10 +140,10 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-center gap-x-2"
+                className="cursor-pointer"
                 onClick={() => editor?.savePng()}
               >
-                <BsFiletypePng className="size-7" />
+                <BsFiletypePng className="size-7 mr-2" />
                 <div>
                   <p>PNG</p>
                   <p className="text-xs text-muted-foreground">
@@ -151,10 +152,10 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-center gap-x-2"
+                className="cursor-pointer"
                 onClick={() => editor?.saveJpeg()}
               >
-                <BsFiletypeJpg className="size-7" />
+                <BsFiletypeJpg className="size-7 mr-2" />
                 <div>
                   <p>JPG</p>
                   <p className="text-xs text-muted-foreground">
@@ -163,10 +164,10 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-center gap-x-2"
+                className="cursor-pointer"
                 onClick={() => editor?.saveSvg()}
               >
-                <BsFiletypeSvg className="size-7" />
+                <BsFiletypeSvg className="size-7 mr-2" />
                 <div>
                   <p>SVG </p>
                   <p className="text-xs text-muted-foreground">
@@ -176,7 +177,7 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* TODO: Add user button */}
+          <UserButton />
         </div>
       </div>
     </nav>

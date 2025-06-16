@@ -13,7 +13,7 @@ export const ourFileRouter = {
   })
     .middleware(async ({ req }) => {
       // TODO: Replace with next-auth
-      const session = await auth()
+      const session = await auth();
 
       if (!session) throw new UploadThingError("Unauthorized");
 
