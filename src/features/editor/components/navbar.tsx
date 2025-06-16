@@ -156,7 +156,7 @@ const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) => {
               >
                 <BsFiletypeJpg className="size-7" />
                 <div>
-                  <p>JPEG</p>
+                  <p>JPG</p>
                   <p className="text-xs text-muted-foreground">
                     Best for photos and web
                   </p>
