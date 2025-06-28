@@ -21,9 +21,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useDuplicateProject } from "@/features/projects/api/use-duplicate-project";
 
 const ProjectsSection = () => {
+  const duplicateMutation = useDuplicateProject()
   const router = useRouter();
+
+  const onCopy = (id: string) => {
+    duplicateMutation.mutate({
+      id
+    })
+  }
 
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useGetProjects();
@@ -108,8 +116,8 @@ const ProjectsSection = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-60">
                         <DropdownMenuItem
-                          disabled={false}
-                          onClick={() => {}}
+                          disabled={duplicateMutation.isPending}
+                          onClick={() => onCopy(project.id)}
                           className="h-10 cursor-pointer"
                         >
                           <Copy className="size-4 mr-2" />

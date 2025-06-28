@@ -12,7 +12,7 @@ type RequestType = InferRequestType<
 >["json"];
 
 export const useCreateProject = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
@@ -29,7 +29,7 @@ export const useCreateProject = () => {
 
       queryClient.invalidateQueries({
         queryKey: ["projects"],
-      })
+      });
     },
     onError: () => {
       toast.error("Failed to create project");

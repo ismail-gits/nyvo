@@ -4,22 +4,20 @@ import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.projects)[":id"]["$patch"],
+  (typeof client.api.projects)[":id"]["duplicate"]["$post"],
   200
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.projects)[":id"]["$patch"]
->["json"];
+  (typeof client.api.projects)[":id"]["duplicate"]["$post"]
+>["param"];
 
-export const useUpdateProject = (id: string) => {
+export const useDuplicateProject = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationKey: ["project", { id }],
-    mutationFn: async (json) => {
-      const response = await client.api.projects[":id"].$patch({
-        json,
-        param: { id },
+    mutationFn: async (param) => {
+      const response = await client.api.projects[":id"].duplicate.$post({
+        param,
       });
 
       if (!response.ok) {
@@ -32,13 +30,9 @@ export const useUpdateProject = (id: string) => {
       queryClient.invalidateQueries({
         queryKey: ["projects"],
       });
-
-      queryClient.invalidateQueries({
-        queryKey: ["project", { id }],
-      });
     },
     onError: () => {
-      toast.error("Failed to update project");
+      toast.error("Failed to duplicate project");
     },
   });
 
