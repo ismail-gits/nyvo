@@ -33,6 +33,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.44.2",
+    "drizzle-zod": "^0.8.2",
     "fabric": "^6.6.5",
     "framer-motion": "^12.15.0",
     "hono": "^4.7.11",

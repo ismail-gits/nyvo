@@ -15,6 +15,13 @@
       "when": 1750022889573,
       "tag": "0001_confused_ulik",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751110138758,
+      "tag": "0002_salty_professor_monster",
+      "breakpoints": true
     }
   ]
 }

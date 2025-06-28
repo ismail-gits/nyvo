@@ -1,12 +1,10 @@
-import Editor from '@/features/editor/components/editor'
-import { protectServer } from '@/features/auth/utils'
+import Editor from "@/features/editor/components/editor";
+import { protectServer } from "@/features/auth/utils";
 
 const EditorPage = async () => {
-  await protectServer()
+  await protectServer();
 
-  return (
-    <Editor/>
-  )
-}
+  return <Editor />;
+};
 
-export default EditorPage
+export default EditorPage;
