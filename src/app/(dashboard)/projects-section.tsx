@@ -22,16 +22,35 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useDuplicateProject } from "@/features/projects/api/use-duplicate-project";
+import { useDeleteProject } from "@/features/projects/api/use-delete-project";
+import UseConfirm from "@/hooks/use-confirm";
 
 const ProjectsSection = () => {
-  const duplicateMutation = useDuplicateProject()
+  const [ConfirmationDialog, confirm] = UseConfirm({
+    title: "Are you sure?",
+    message: "You are about to delete this project.",
+  });
+
   const router = useRouter();
+
+  const duplicateMutation = useDuplicateProject();
+  const deleteMutation = useDeleteProject();
 
   const onCopy = (id: string) => {
     duplicateMutation.mutate({
-      id
-    })
-  }
+      id,
+    });
+  };
+
+  const onDelete = async (id: string) => {
+    const ok = await confirm();
+
+    if (ok) {
+      deleteMutation.mutate({
+        id,
+      });
+    }
+  };
 
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useGetProjects();
@@ -75,6 +94,7 @@ const ProjectsSection = () => {
 
   return (
     <div className="space-y-4">
+      <ConfirmationDialog />
       <h3 className="font-semibold text-lg">Recent Projects</h3>
       <Table>
         <TableBody>
@@ -124,8 +144,8 @@ const ProjectsSection = () => {
                           Make a copy
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                          disabled={false}
-                          onClick={() => {}}
+                          disabled={deleteMutation.isPending}
+                          onClick={() => onDelete(project.id)}
                           className="h-10 cursor-pointer"
                         >
                           <Trash className="size-4 mr-2" />

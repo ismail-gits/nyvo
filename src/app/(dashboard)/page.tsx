@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { protectServer } from "@/features/auth/utils";
 import Banner from "./banner";
-import ProjectsSection from "./projectsSection";
+import ProjectsSection from "./projects-section";
 
 const Home = async () => {
   await protectServer();
