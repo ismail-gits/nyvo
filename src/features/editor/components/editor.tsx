@@ -21,6 +21,7 @@ import AiSidebar from "./ai-sidebar";
 import RemoveBgSidebar from "./remove-bg-sidebar";
 import DrawSidebar from "./draw-sidebar";
 import SettingsSidebar from "./settings-sidebar";
+import { ResponseType } from "@/features/projects/api/use-get-project";
 
 // Global fabric object customizations
 // Need to be set before creating canvas
@@ -45,7 +46,13 @@ defaultITextObject.cursorDelay = 200;
 defaultITextObject.cursorDuration = 300;
 defaultITextObject.padding = 4;
 
-const Editor = () => {
+interface EditorProps {
+  initialData: ResponseType["data"]
+}
+
+const Editor = ({
+  initialData
+}: EditorProps) => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onClearSelection = useCallback(() => {
