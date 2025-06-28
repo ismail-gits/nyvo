@@ -4,9 +4,19 @@ import { JSON_KEYS } from "../types";
 
 interface UseHistoryProps {
   canvas: fabric.Canvas | null;
+  workspace: fabric.Rect | null;
+  saveCallback?: (values: {
+    json: string;
+    height: number;
+    width: number;
+  }) => void;
 }
 
-export const useHistory = ({ canvas }: UseHistoryProps) => {
+export const useHistory = ({
+  canvas,
+  workspace,
+  saveCallback,
+}: UseHistoryProps) => {
   const [historyIndex, setHistoryIndex] = useState(0);
   const canvasHistory = useRef<string[]>([]);
   const skipSave = useRef<boolean>(false);
@@ -34,8 +44,14 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
         setHistoryIndex(newIndex);
       }
 
-      // TODO: Save callback
-      // Save to database
+      const height = workspace?.height || 0;
+      const width = workspace?.width || 0;
+
+      saveCallback?.({
+        json,
+        height,
+        width,
+      });
     },
     [canvas]
   );

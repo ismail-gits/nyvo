@@ -177,6 +177,14 @@ export const TEXT_OPTIONS = {
 
 export type UseEditorProps = {
   clearSelectionCallback: () => void;
+  saveCallback?: (values: {
+    json: string;
+    height: number;
+    width: number;
+  }) => void;
+  defaultState?: string;
+  defaultHeight?: number;
+  defaultWidth?: number;
 };
 
 export type BuildEditorProps = {

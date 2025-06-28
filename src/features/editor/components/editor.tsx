@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as fabric from "fabric";
+import debounce from "lodash.debounce";
 import { useEditor } from "../hooks/use-editor";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
@@ -22,6 +23,7 @@ import RemoveBgSidebar from "./remove-bg-sidebar";
 import DrawSidebar from "./draw-sidebar";
 import SettingsSidebar from "./settings-sidebar";
 import { ResponseType } from "@/features/projects/api/use-get-project";
+import { useUpdateProject } from "@/features/projects/api/use-update-project";
 
 // Global fabric object customizations
 // Need to be set before creating canvas
@@ -47,12 +49,19 @@ defaultITextObject.cursorDuration = 300;
 defaultITextObject.padding = 4;
 
 interface EditorProps {
-  initialData: ResponseType["data"]
+  initialData: ResponseType["data"];
 }
 
-const Editor = ({
-  initialData
-}: EditorProps) => {
+const Editor = ({ initialData }: EditorProps) => {
+  const { mutate } = useUpdateProject(initialData.id);
+
+  const debouncedSave = useCallback(
+    debounce((values: { json: string; height: number; width: number }) => {
+      mutate(values);
+    }, 500),
+    [mutate]
+  );
+
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onClearSelection = useCallback(() => {
@@ -63,6 +72,10 @@ const Editor = ({
 
   const { init, editor } = useEditor({
     clearSelectionCallback: onClearSelection,
+    saveCallback: debouncedSave,
+    defaultState: initialData.json,
+    defaultHeight: initialData.height,
+    defaultWidth: initialData.width,
   });
 
   const onChangeActiveTool = useCallback(
@@ -107,6 +120,7 @@ const Editor = ({
   return (
     <div className="h-full flex flex-col">
       <Navbar
+        id={initialData.id}
         editor={editor}
         activeTool={activeTool}
         onChangeActiveTool={onChangeActiveTool}

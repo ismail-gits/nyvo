@@ -38,7 +38,7 @@ const EditorPage = ({ params }: EditorPageProps) => {
     );
   }
 
-  return <Editor initialData={data}/>;
+  return <Editor initialData={data} />;
 };
 
 export default EditorPage;

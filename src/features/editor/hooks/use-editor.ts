@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, useRef } from "react";
 import * as fabric from "fabric";
 import { useAutoResize } from "./use-auto-resize";
 import {
@@ -31,6 +31,7 @@ import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 import { useHotkeys } from "./use-hotkeys";
 import { useWindowEvents } from "./use-window-events";
+import { useLoadState } from "./use-load-state";
 
 const buildEditor = ({
   canvas,
@@ -637,7 +638,17 @@ const buildEditor = ({
   };
 };
 
-export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
+export const useEditor = ({
+  clearSelectionCallback,
+  saveCallback,
+  defaultState,
+  defaultHeight,
+  defaultWidth,
+}: UseEditorProps) => {
+  const initialState = useRef(defaultState);
+  const initialHeight = useRef(defaultHeight);
+  const initialWidth = useRef(defaultWidth);
+
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [workspace, setWorkspace] = useState<fabric.Rect | null>(null);
@@ -653,7 +664,7 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
 
   const { save, canUndo, canRedo, undo, redo, canvasHistory, setHistoryIndex } =
-    useHistory({ canvas });
+    useHistory({ canvas, workspace, saveCallback });
 
   const { copy, paste } = useClipboard({ canvas });
 
@@ -680,6 +691,14 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
   });
 
   useWindowEvents();
+
+  useLoadState({
+    autoZoom,
+    canvas,
+    initialState,
+    canvasHistory,
+    setHistoryIndex,
+  });
 
   const editor = useMemo(() => {
     if (canvas) {
@@ -737,8 +756,8 @@ export const useEditor = ({ clearSelectionCallback }: UseEditorProps) => {
     }) => {
       const initialWorkspace = new fabric.Rect({
         id: "workspace",
-        width: 900,
-        height: 1200,
+        height: initialHeight.current,
+        width: initialWidth.current,
         fill: "white",
         selectable: false,
         hasControls: false,
