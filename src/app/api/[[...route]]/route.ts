@@ -6,6 +6,7 @@ import images from "./images";
 import ai from "./ai";
 import users from "./users";
 import projects from "./projects";
+import subscriptions from "./subscriptions";
 import authConfig from "@/auth.config";
 
 // Revert to "edge", if planning to run on edge
@@ -26,7 +27,8 @@ const routes = app
   .route("/users", users)
   .route("/images", images)
   .route("/ai", ai)
-  .route("projects", projects);
+  .route("projects", projects)
+  .route("/subscriptions", subscriptions);
 
 export const GET = handle(app);
 export const POST = handle(app);

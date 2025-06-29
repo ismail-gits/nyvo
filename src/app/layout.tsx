@@ -7,6 +7,7 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
+import Modals from "@/components/modals";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default async function RootLayout({
         >
           <Providers>
             <Toaster />
+            <Modals />
             {children}
           </Providers>
         </body>

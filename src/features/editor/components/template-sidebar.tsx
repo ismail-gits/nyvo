@@ -4,13 +4,14 @@ import { ActiveTool, Editor } from "../types";
 import ToolSidebarHeader from "./tool-sidebar-header";
 import ToolSidebarClose from "./tool-sidebar-close";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { AlertTriangle, Loader } from "lucide-react";
+import { AlertTriangle, Crown, Loader } from "lucide-react";
 import Image from "next/image";
 import {
   ResponseType,
   useGetTemplates,
 } from "@/features/projects/api/use-get-templates";
 import UseConfirm from "@/hooks/use-confirm";
+import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
 
 interface TemplateSidebarProps {
   editor: Editor | undefined;
@@ -23,8 +24,10 @@ const TemplateSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: TemplateSidebarProps) => {
+  const { shouldBlock, triggerPaywall } = usePaywall();
+
   const [ConfirmDialog, confirm] = UseConfirm({
-    title: "Are you surer?",
+    title: "Are you sure?",
     message: "You are about to replace the current project with this template.",
   });
 
@@ -38,7 +41,10 @@ const TemplateSidebar = ({
   };
 
   const onClick = async (template: ResponseType["data"][0]) => {
-    // TODO: Check if template is PRO
+    if (template.isPro && shouldBlock) {
+      triggerPaywall();
+      return;
+    }
 
     const ok = await confirm();
 
@@ -95,6 +101,11 @@ const TemplateSidebar = ({
                         alt={template.name || "Template"}
                         className="object-cover"
                       />
+                      {template.isPro && (
+                        <div className="absolute top-2 right-2 size-7 items-center flex justify-center bg-black/50 rounded-full ">
+                          <Crown className="size-4 fill-yellow-500  text-yellow-500" />
+                        </div>
+                      )}
                       <div className="opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-[10px] truncate text-white p-1 bg-black/50 text-left">
                         {template.name}
                       </div>

@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRemoveBackground } from "@/features/ai/api/use-remove-background";
+import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
 
 interface RemoveBgSidebarProps {
   editor: Editor | undefined;
@@ -20,6 +21,8 @@ const RemoveBgSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: RemoveBgSidebarProps) => {
+  const { shouldBlock, triggerPaywall } = usePaywall();
+
   const mutation = useRemoveBackground();
 
   const selectObject = editor?.selectedObjects[0];
@@ -32,7 +35,10 @@ const RemoveBgSidebar = ({
   };
 
   const onClick = () => {
-    // TODO: Block with paywall
+    if (shouldBlock) {
+      triggerPaywall();
+      return;
+    }
 
     mutation.mutate(
       { imageUrl: imageSrc },
