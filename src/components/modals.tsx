@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import FailModal from "@/features/subscriptions/components/fail-modal";
 import SubscriptionModal from "@/features/subscriptions/components/subscription-modal";
+import SuccessModal from "@/features/subscriptions/components/success-modal";
 
 const Modals = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -20,6 +21,7 @@ const Modals = () => {
     <>
       <SubscriptionModal />
       <FailModal />
+      <SuccessModal />
     </>
   );
 };
