@@ -33,12 +33,13 @@ const TemplateCard = ({
           disabled ? "cursor-not-allowed opacity-75" : "cursor-pointer"
         )}
       >
-        <div className="relative rounded-xl h-full w-full overflow-hidden border">
+        <div
+        className="relative rounded-xl h-full w-full overflow-hidden border">
           <Image
             src={imageSrc}
             alt="Title"
-            height={height}
             width={width}
+            height={height}
             className="object-cover transition transform group-hover:scale-105"
           />
           {isPro && (

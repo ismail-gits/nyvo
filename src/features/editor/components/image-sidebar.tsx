@@ -24,7 +24,7 @@ const ImageSidebar = ({
   const { data, isLoading, isError } = useGetImages();
 
   const onClose = () => {
-    onChangeActiveTool("images");
+    onChangeActiveTool("select");
   };
 
   return (
@@ -39,19 +39,19 @@ const ImageSidebar = ({
         description="Add images to your canvas"
       />
       <div className="p-4 border-b">
-        <UploadButton 
+        <UploadButton
           appearance={{
             button: "w-full text-sm font-medium",
-            allowedContent: "hidden"
+            allowedContent: "hidden",
           }}
           content={{
-            button: "Upload Image"
+            button: "Upload Image",
           }}
           endpoint="imageUploader"
           onClientUploadComplete={(res) => {
-            editor?.addImage(res[0].ufsUrl)
+            editor?.addImage(res[0].ufsUrl);
           }}
-        /> 
+        />
       </div>
       {isLoading && (
         <div className="flex justify-center items-center flex-1">
