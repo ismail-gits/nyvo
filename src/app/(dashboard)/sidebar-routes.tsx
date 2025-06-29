@@ -8,11 +8,22 @@ import SidebarItem from "./sidebar-item";
 import { usePathname } from "next/navigation";
 import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
 import { useCheckout } from "@/features/subscriptions/api/use-checkout";
+import { useBilling } from "@/features/subscriptions/api/use-billing";
 
 const SidebarRoutes = () => {
-  const { shouldBlock, isLoading } = usePaywall();
-  const mutation = useCheckout();
+  const { shouldBlock, triggerPaywall, isLoading } = usePaywall();
+  const billingMutation = useBilling();
+  const checkoutMutation = useCheckout();
   const pathname = usePathname();
+
+  const onClick = () => {
+    if (shouldBlock) {
+      triggerPaywall();
+      return;
+    }
+
+    billingMutation.mutate();
+  };
 
   return (
     <div className="flex flex-col gap-y-4 flex-1">
@@ -20,8 +31,8 @@ const SidebarRoutes = () => {
         <>
           <div className="px-3">
             <Button
-              onClick={() => mutation.mutate()}
-              disabled={mutation.isPending}
+              onClick={() => checkoutMutation.mutate()}
+              disabled={checkoutMutation.isPending}
               className="w-full rounded-xl border-none hover:bg-white hover:opacity-75 transition"
               variant={"outline"}
               size={"lg"}
@@ -52,7 +63,7 @@ const SidebarRoutes = () => {
           href={pathname}
           icon={CreditCard}
           label="Billing"
-          onClick={() => {}}
+          onClick={onClick}
         />
         <SidebarItem
           href="mailto:support@nyvo.com"
