@@ -1,7 +1,8 @@
-import type { NextAuthConfig } from "next-auth"
+import type { NextAuthConfig } from "next-auth";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { JWT } from "next-auth/jwt";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db/drizzle";
@@ -43,17 +44,17 @@ export default {
           .from(users)
           .where(eq(users.email, email));
 
-        const user = query[0]
+        const user = query[0];
 
         // !user.password to check if user is create via google or github as requires no password
         if (!user || !user.password) {
-          return null
+          return null;
         }
 
-        const passwordsMatch = await bcrypt.compare(password, user.password)
+        const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordsMatch) {
-          return null
+          return null;
         }
 
         return user;
@@ -85,4 +86,4 @@ export default {
       return session;
     },
   },
-} satisfies NextAuthConfig
+} satisfies NextAuthConfig;

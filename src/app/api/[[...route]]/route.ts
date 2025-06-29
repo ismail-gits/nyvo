@@ -14,7 +14,7 @@ export const runtime = "nodejs";
 
 const getAuthConfig = (c: Context): AuthConfig => {
   return {
-    secret: c.env?.AUTH_SECRET!,
+    secret: c.env?.AUTH_SECRET,
     ...authConfig,
   };
 };
@@ -23,6 +23,7 @@ const app = new Hono().basePath("/api");
 
 app.use("*", initAuthConfig(getAuthConfig));
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app
   .route("/users", users)
   .route("/images", images)

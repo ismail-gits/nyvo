@@ -34,11 +34,7 @@ export const useCanvasEvents = ({
     ) => {
       setSelectedObjects(e.selected);
     };
-    const handleSelectedCleared = (
-      e: Partial<fabric.TEvent<fabric.TPointerEvent>> & {
-        deselected: fabric.FabricObject[];
-      }
-    ) => {
+    const handleSelectedCleared = () => {
       setSelectedObjects([]);
       clearSelectionCallback?.();
     };
@@ -73,5 +69,5 @@ export const useCanvasEvents = ({
         canvas.off("object:modified", handleObjectModified);
       }
     };
-  }, [canvas, clearSelectionCallback]);
+  }, [canvas, clearSelectionCallback, save, setSelectedObjects]);
 };

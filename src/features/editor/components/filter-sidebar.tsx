@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ActiveTool, Editor, filters, fonts } from "../types";
+import { ActiveTool, Editor, filters } from "../types";
 
 import ToolSidebarHeader from "./tool-sidebar-header";
 import ToolSidebarClose from "./tool-sidebar-close";
@@ -18,6 +18,7 @@ const FilterSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: FilterSidebarProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [version, setVersion] = useState(0);
   const value = editor?.getActiveImageFilters() || ["none"];
 

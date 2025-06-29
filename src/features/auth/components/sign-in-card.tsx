@@ -23,8 +23,8 @@ const SignInCard = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const params = useSearchParams()
-  const error = params.get("error")
+  const params = useSearchParams();
+  const error = params.get("error");
 
   const onCredentialsSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ const SignInCard = () => {
       </CardHeader>
       {!!error && (
         <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive">
-          <TriangleAlert className="size-4"/>
+          <TriangleAlert className="size-4" />
           <p>Invalid email or password</p>
         </div>
       )}
@@ -73,7 +73,7 @@ const SignInCard = () => {
             Continue
           </Button>
         </form>
-        <Separator/>
+        <Separator />
         <div className="flex flex-col gap-y-2.5">
           <Button
             onClick={() => onProviderSignIn("google")}
@@ -96,7 +96,7 @@ const SignInCard = () => {
         </div>
       </CardContent>
       <CardFooter className="text-xs text-muted-foreground px-0 pb-0">
-        Don't have an account?
+        Don&apos;t have an account?
         <Link href="/sign-up">
           <span className="text-sky-700 underline pl-2">Sign up</span>
         </Link>

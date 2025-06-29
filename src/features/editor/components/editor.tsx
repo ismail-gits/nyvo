@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as fabric from "fabric";
 import debounce from "lodash.debounce";
 import { useEditor } from "../hooks/use-editor";
@@ -56,12 +56,14 @@ interface EditorProps {
 const Editor = ({ initialData }: EditorProps) => {
   const { mutate } = useUpdateProject(initialData.id);
 
-  const debouncedSave = useCallback(
-    debounce((values: { json: string; height: number; width: number }) => {
-      mutate(values);
-    }, 500),
-    [mutate]
-  );
+  const debouncedSave = useMemo(() => {
+    return debounce(
+      (values: { json: string; height: number; width: number }) => {
+        mutate(values);
+      },
+      500
+    );
+  }, [mutate]);
 
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 

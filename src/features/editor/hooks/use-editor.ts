@@ -207,9 +207,12 @@ const buildEditor = ({
         return [];
       }
 
-      return (selectedObject.filters || [])
-        .filter((f) => f != null)
-        .map((f) => (f as any)._id || f.type);
+      return (
+        (selectedObject.filters || [])
+          .filter((f) => f != null)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .map((f) => (f as any)._id || f.type)
+      );
     },
     changeImageFilter: (filter: string) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -744,6 +747,7 @@ export const useEditor = ({
     canRedo,
     undo,
     redo,
+    workspace,
   ]);
 
   const init = useCallback(
@@ -789,7 +793,7 @@ export const useEditor = ({
       canvasHistory.current = [currentState];
       setHistoryIndex(0);
     },
-    []
+    [canvasHistory, setHistoryIndex]
   );
 
   return { init, editor };

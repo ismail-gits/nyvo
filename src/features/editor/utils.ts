@@ -2,15 +2,18 @@ import * as fabric from "fabric";
 import { RGBColor } from "react-color";
 import { v4 } from "uuid";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function transformText(objects: any) {
   if (!objects) {
     return;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   objects.forEach((item: any) => {
     if (item.objects) {
       transformText(item.objects);
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       item.type === "text" && (item.type = "textbox");
     }
   });
@@ -93,12 +96,14 @@ export const createFilter = (filter: string) => {
     case "sharpen":
       effect = new fabric.filters.Convolute({
         matrix: [0, -1, 0, -1, 5, -1, 0, -1, 0],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }) as any;
       effect._id = "sharpen";
       break;
     case "emboss":
       effect = new fabric.filters.Convolute({
         matrix: [1, 1, 1, 1, 0.7, -1, -1, -1, -1],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }) as any;
       effect._id = "emboss";
       break;
@@ -109,6 +114,7 @@ export const createFilter = (filter: string) => {
       });
       break;
     case "blacknwhite":
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       effect = new fabric.filters.BlackWhite() as any;
       effect._id = "blacknwhite";
       break;
@@ -127,6 +133,7 @@ export const createFilter = (filter: string) => {
     case "huerotate":
       effect = new fabric.filters.HueRotation({
         rotation: 0.5,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }) as any;
       effect._id = "huerotate";
       break;

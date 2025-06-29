@@ -23,7 +23,7 @@ const SubscriptionAlert = () => {
     if (success) {
       onOpenSuccess();
     }
-  }, [canceled, onOpenFail, onOpenSuccess]);
+  }, [canceled, onOpenFail, onOpenSuccess, success]);
 
   return null;
 };

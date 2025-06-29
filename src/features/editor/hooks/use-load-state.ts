@@ -10,7 +10,7 @@ interface UseLoadStateProps {
   setHistoryIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const useLoadState = async ({
+export const useLoadState = ({
   autoZoom,
   canvas,
   initialState,
@@ -37,5 +37,5 @@ export const useLoadState = async ({
     };
 
     loadCanvas();
-  }, [canvas, autoZoom]);
+  }, [canvas, autoZoom, canvasHistory, initialState, setHistoryIndex]);
 };

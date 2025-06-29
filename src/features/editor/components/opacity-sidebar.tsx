@@ -4,7 +4,6 @@ import { ActiveTool, Editor } from "../types";
 import ToolSidebarHeader from "./tool-sidebar-header";
 import ToolSidebarClose from "./tool-sidebar-close";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useEffect, useMemo, useState } from "react";
 
@@ -20,13 +19,16 @@ const OpacitySidebar = ({
   onChangeActiveTool,
 }: OpacitySidebarProps) => {
   const initialValue = editor?.getActiveOpacity() || 1;
-  const selectedObject = useMemo(() => editor?.selectedObjects[0], [editor?.selectedObjects])
+  const selectedObject = useMemo(
+    () => editor?.selectedObjects[0],
+    [editor?.selectedObjects]
+  );
 
   const [opacity, setOpacity] = useState(initialValue);
 
   useEffect(() => {
     if (selectedObject) {
-      setOpacity(selectedObject.get("opacity") || 1)
+      setOpacity(selectedObject.get("opacity") || 1);
     }
   }, [selectedObject]);
 

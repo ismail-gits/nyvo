@@ -27,7 +27,7 @@ const FailModal = () => {
           <Logo />
           <DialogTitle>Something went wrong</DialogTitle>
           <DialogDescription>
-            We couldn't process your payment
+            We couldn&apos;t process your payment
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="p-2 gap-y-4">

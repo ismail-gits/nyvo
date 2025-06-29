@@ -11,7 +11,7 @@ export const ourFileRouter = {
       maxFileSize: "4MB",
     },
   })
-    .middleware(async ({ req }) => {
+    .middleware(async () => {
       // TODO: Replace with next-auth
       const session = await auth();
 

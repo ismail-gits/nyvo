@@ -53,7 +53,7 @@ export const useHistory = ({
         width,
       });
     },
-    [canvas]
+    [canvas, saveCallback, workspace?.height, workspace?.width]
   );
 
   const undo = useCallback(async () => {
@@ -69,7 +69,7 @@ export const useHistory = ({
       setHistoryIndex(previousIndex);
       skipSave.current = false;
     }
-  }, [canvas, historyIndex, canRedo]);
+  }, [canvas, historyIndex, canUndo]);
 
   const redo = useCallback(async () => {
     if (canRedo()) {

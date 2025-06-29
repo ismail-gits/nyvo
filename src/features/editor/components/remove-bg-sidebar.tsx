@@ -27,7 +27,7 @@ const RemoveBgSidebar = ({
 
   const selectObject = editor?.selectedObjects[0];
 
-  // @ts-ignore
+  // @ts-expect-error: _originalElement is a private property not typed, but we know it exists
   const imageSrc = selectObject?._originalElement?.currentSrc;
 
   const onClose = () => {
