@@ -1,218 +1,399 @@
+# NYVO
+**Professional Design Editor & Creative Platform**
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://typescriptlang.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5.0-FF4154?style=for-the-badge&logo=react-query)](https://tanstack.com/query)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Fabric.js](https://img.shields.io/badge/Fabric.js-Canvas-orange?style=for-the-badge)](http://fabricjs.com/)
+
+> A powerful, feature-rich design editor built with modern web technologies. Create stunning graphics, edit images, and design with AI-powered tools.
+
+## 🚀 Features
+
+### Core Design Tools
+- **Canvas Editor**: Advanced HTML5 canvas-based editor powered by Fabric.js
+- **Shape Tools**: Create and manipulate rectangles, circles, triangles, and custom shapes
+- **Text Editing**: Rich text editor with custom fonts, sizing, and formatting
+- **Image Manipulation**: Upload, resize, crop, and apply filters to images
+- **Drawing Tools**: Freehand drawing with customizable brush settings
+- **Layer Management**: Full layer control with reordering and grouping
+
+### AI-Powered Features
+- **AI Image Generation**: Create images from text prompts using Google Gemini AI
+- **Background Removal**: Intelligent background removal powered by Remove.bg API
+- **Smart Templates**: AI-suggested design templates
+
+### Advanced Editing
+- **Color Management**: Advanced color picker with fill and stroke controls
+- **Opacity Control**: Precise opacity adjustments for all elements
+- **Filter System**: Professional image filters and effects
+- **History/Undo**: Full undo/redo functionality with state management
+- **Keyboard Shortcuts**: Professional hotkey support for efficient workflow
+
+### Data Management & Performance
+- **Intelligent Caching**: TanStack Query automatically caches API responses
+- **Background Synchronization**: Automatic data revalidation and updates
+- **Optimistic Updates**: Instant UI updates with automatic rollback on errors
+- **Offline Support**: Cached data available when offline
+- **Request Deduplication**: Prevents duplicate API calls
+- **Infinite Queries**: Efficient pagination for large datasets
+
+### Project Management
+- **Project Persistence**: Save and load projects with full state preservation
+- **Template Library**: Pre-built templates for quick design starts
+- **Duplicate Projects**: Clone existing projects for rapid iteration
+- **Export Options**: Multiple export formats and quality settings
+
+### User Experience
+- **Authentication**: Secure sign-up/sign-in with NextAuth.js
+- **Subscription Management**: Stripe-powered premium features
+- **Responsive Design**: Works seamlessly across desktop and mobile devices
+- **Real-time Collaboration**: Multi-user editing capabilities
+
+## 🏗️ Architecture
+
+### Frontend Architecture
+```
+src/
+├── app/                      # Next.js App Router
+│   ├── (auth)/              # Authentication pages
+│   ├── (dashboard)/         # Main dashboard
+│   ├── editor/[projectId]/  # Editor interface
+│   └── api/                 # API routes
+├── features/                # Feature-based organization
+│   ├── auth/               # Authentication logic
+│   ├── editor/             # Canvas editor functionality
+│   ├── projects/           # Project management
+│   ├── subscriptions/      # Payment & subscriptions
+│   ├── ai/                # AI integrations
+│   └── images/            # Image handling
+├── components/             # Reusable UI components
+├── lib/                   # Third-party integrations
+└── hooks/                # Custom React hooks
 ```
 
-## Overview
+### Key Components
+- **Editor Engine**: Custom Fabric.js wrapper with React integration
+- **State Management**: Zustand for client-side state + TanStack Query for server state
+- **Data Layer**: TanStack Query for intelligent caching, background updates, and optimistic UI
+- **Database Layer**: Drizzle ORM with type-safe queries
+- **API Layer**: Hono.js for fast, lightweight API routes
+- **Authentication**: NextAuth.js with multiple providers
+- **File Storage**: UploadThing for secure file uploads
 
-NYVO is an innovative, AI-powered creative design platform. It empowers users to generate, edit, and manage their visual projects with intelligent tools, seamless cloud storage, and robust authentication. From AI-driven image generation to background removal and a comprehensive visual editor, NYVO is designed to streamline the creative workflow for individuals and teams.
+## 🛠️ Tech Stack
 
-## Features
+### Frontend
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript 5.0+
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Canvas**: Fabric.js for advanced graphics manipulation
+- **State Management**: Zustand + TanStack Query for server state
+- **Data Fetching**: TanStack Query (React Query) for caching & synchronization
+- **UI Components**: Radix UI primitives via shadcn/ui
 
-NYVO provides a rich set of features to cater to diverse creative needs:
+### Backend
+- **API Framework**: Hono.js
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: NextAuth.js
+- **File Uploads**: UploadThing
+- **Payment Processing**: Stripe
 
-**User Authentication & Management:**
-*   Secure sign-up and sign-in processes.
-*   User account management.
+### External Services
+- **AI Image Generation**: Google Gemini API
+- **Background Removal**: Remove.bg API
+- **Stock Images**: Unsplash API
+- **Email**: Resend API
 
-**Dashboard & Project Management:**
-*   Intuitive dashboard for an overview of projects and templates.
-*   Create, view, update, and delete projects.
-*   Duplicate existing projects for rapid iteration.
-*   Browse and utilize pre-designed templates.
+### Development Tools
+- **Package Manager**: npm/yarn
+- **Linting**: ESLint with Next.js config
+- **Type Checking**: TypeScript strict mode
+- **Database Migrations**: Drizzle Kit
 
-**Advanced Visual Editor:**
-*   **Text Tools:** Add and customize text with various fonts, sizes, and colors.
-*   **Shape Tools:** Insert and manipulate various geometric shapes.
-*   **Drawing Tools:** Freehand drawing capabilities.
-*   **Image Management:** Upload, insert, and manage images within projects.
-*   **AI-Powered Image Tools:**
-    *   **AI Image Generation:** Generate images from text prompts.
-    *   **Background Removal:** Automatically remove backgrounds from images.
-*   **Styling & Effects:**
-    *   Fill color selection.
-    *   Stroke color and width adjustment.
-    *   Opacity control.
-    *   Image filters.
-*   **Editor Utilities:**
-    *   Undo/Redo functionality for robust editing.
-    *   Clipboard operations (copy, paste).
-    *   Hotkey support for efficient workflow.
-    *   Auto-resizing of canvas elements.
-    *   Real-time saving and loading of project states.
+## 📋 Prerequisites
 
-**API Integrations:**
-*   Dedicated API endpoints for AI image generation, background removal, project management, user data, and subscriptions.
-*   Integration with external services like Unsplash for image search and Uploadthing for file uploads.
+- Node.js 18.0 or later
+- PostgreSQL database
+- npm or yarn package manager
 
-**Subscription & Billing:**
-*   Stripe integration for subscription management and billing.
-*   Modals for managing subscription success, failure, and general subscription information.
-*   Paywall management to gate premium features.
+## 🚀 Getting Started
 
-## Tech Stack
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ismail-gits/nyvo.git
+cd nyvo
+```
 
-NYVO is built with a modern and robust tech stack, ensuring scalability, performance, and a delightful developer experience.
+### 2. Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
 
-*   **Frontend Framework:** Next.js 14 (React)
-*   **Styling:** Tailwind CSS, PostCSS
-*   **UI Components:** Shadcn UI
-*   **State Management:** React Query (TanStack Query)
-*   **Authentication:** NextAuth.js
-*   **Database:** Drizzle ORM (for schema definition and interaction)
-*   **Backend API:** Hono (for API routes)
-*   **Cloud Storage:** Uploadthing
-*   **AI & Image Processing:**
-    *   Gemini (for AI image generation)
-    *   Remove.bg API (for background removal)
-*   **Payment Processing:** Stripe
-*   **Image Assets:** Unsplash API
-*   **Code Quality:** ESLint
-*   **TypeScript:** For type-safe development across the entire application.
+### 3. Environment Setup
+Create a `.env.local` file in the root directory:
 
-## Architecture
+```env
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/nyvo"
 
-NYVO follows a modular and component-driven architecture, leveraging Next.js's app router for clear separation of concerns and efficient routing.
+# NextAuth
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-nextauth-secret"
+
+# OAuth Providers (add as needed)
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# AI Services
+GEMINI_API_KEY="your-gemini-api-key"
+REMOVEBG_API_KEY="your-removebg-api-key"
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY="your-stripe-publishable-key"
+STRIPE_SECRET_KEY="your-stripe-secret-key"
+STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
+
+# UploadThing
+UPLOADTHING_SECRET="your-uploadthing-secret"
+UPLOADTHING_APP_ID="your-uploadthing-app-id"
+
+# Unsplash
+UNSPLASH_ACCESS_KEY="your-unsplash-access-key"
+```
+
+### 4. Database Setup
+```bash
+# Generate and run migrations
+npm run db:generate
+npm run db:migrate
+
+# Optional: Seed the database
+npm run db:seed
+```
+
+### 5. Development Server
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📁 Project Structure
+
+### Core Directories
+
+#### `/src/app`
+Next.js 14 App Router structure with route groups for organization:
+- `(auth)`: Authentication-related pages
+- `(dashboard)`: Main application dashboard
+- `api`: Server-side API routes with Hono.js integration
+
+#### `/src/features`
+Feature-based architecture following domain-driven design:
+- Each feature contains its own components, hooks, API calls, and utilities
+- **TanStack Query Integration**: Custom hooks for data fetching, caching, and mutations
+- API hooks pattern: `use-get-*`, `use-create-*`, `use-update-*`, `use-delete-*`
+- Promotes code reusability and maintainable architecture
+
+#### `/src/components`
+Reusable UI components built with shadcn/ui and Radix UI primitives:
+- `query-provider.tsx`: TanStack Query client configuration and provider
+- `providers.tsx`: Combined providers for authentication, theme, and data fetching
+
+#### `/src/lib`
+Third-party service integrations and utility functions
+
+## 🎨 Editor Features Deep Dive
+
+### Canvas Engine
+Built on Fabric.js, providing:
+- Object manipulation (move, resize, rotate)
+- Layer management with z-index control
+- Group selection and operations
+- Precision alignment tools
+- Snap-to-grid functionality
+
+### Tool Palette
+- **Selection Tool**: Multi-select, group operations
+- **Shape Tools**: Rectangle, circle, triangle, polygon
+- **Text Tool**: Rich text with font customization
+- **Draw Tool**: Freehand drawing with brush controls
+- **Image Tool**: Upload, resize, crop, filters
+- **AI Tools**: Generate images, remove backgrounds
+
+### Sidebar Panels
+- **Properties**: Object-specific controls
+- **Layers**: Visual layer management
+- **Templates**: Pre-built design templates
+- **Images**: Stock photo integration via Unsplash
+- **AI**: AI-powered generation tools
+
+## 🔧 API Endpoints & Data Fetching
+
+### TanStack Query Data Flow
 
 ```mermaid
-graph TD
-    A[User] --> B(Frontend - Next.js App)
-    B --> C{Authentication}
-    C --> D[NextAuth.js]
-    D --> E[Database - Drizzle ORM]
-
-    B --> F(Dashboard)
-    F --> G[Project Management APIs]
-    G --> E
-
-    B --> H(Editor)
-    H --> I[AI APIs]
-    I --> J[Gemini / Remove.bg]
-
-    H --> K[Image APIs]
-    K --> L[Unsplash / Uploadthing]
-
-    B --> M(Subscription & Billing)
-    M --> N[Stripe API]
-    M --> E
-
-    G, I, K, N --> O[Backend - Hono API Routes]
-    O --> E
+flowchart LR
+    subgraph "Client Side"
+        Component[React Component]
+        Hook[Custom Hook]
+        Cache[Query Cache]
+        Optimistic[Optimistic Updates]
+    end
+    
+    subgraph "Network Layer"
+        HTTP[HTTP Request]
+        Background[Background Refetch]
+        Retry[Retry Logic]
+    end
+    
+    subgraph "Server Side"
+        API[API Endpoint]
+        DB[(Database)]
+    end
+    
+    Component --> Hook
+    Hook --> Cache
+    
+    Cache -->|Cache Miss| HTTP
+    Cache -->|Cache Hit| Component
+    
+    HTTP --> API
+    API --> DB
+    
+    Hook --> Optimistic
+    Optimistic --> Component
+    
+    Background --> HTTP
+    Retry --> HTTP
+    
+    DB --> API
+    API --> Cache
+    Cache --> Component
 ```
 
-### Directory Structure Highlights
+### TanStack Query Integration
+All API calls are wrapped with TanStack Query for optimal performance:
 
-*   **`public/`**: Static assets.
-*   **`src/app/`**: Next.js App Router structure.
-    *   **`(auth)`**: Authentication-related pages (sign-in, sign-up) and layout.
-    *   **`(dashboard)`**: Main user dashboard, showcasing projects and templates, with dedicated layouts and components (sidebar, navbar).
-    *   **`api/[[...route]]`**: Core Hono API routes for AI, images, projects, subscriptions, and users.
-    *   **`api/auth/[...nextAuth]`**: NextAuth.js API routes for authentication.
-    *   **`api/uploadthing`**: Routes for Uploadthing file uploads.
-    *   **`editor/[projectId]`**: The main visual editor interface, dynamically routed per project.
-*   **`src/components/`**: Reusable UI components.
-    *   **`ui/`**: Shadcn UI components (avatar, button, card, dialog, etc.)
-*   **`src/db/`**: Database schema definitions using Drizzle ORM.
-*   **`src/features/`**: Feature-sliced architecture. Each directory represents a distinct feature with its own API hooks, components, and utilities (e.g., `ai`, `auth`, `editor`, `images`, `projects`, `subscriptions`). This promotes maintainability and scalability.
-*   **`src/hooks/`**: Custom React hooks for shared logic.
-*   **`src/lib/`**: Utility functions and external service integrations (Gemini, Hono, remove.bg, Stripe, Unsplash, Uploadthing, general utils).
-*   **`src/` (root)**: `auth.config.ts`, `auth.ts` (NextAuth.js configuration), and `middleware.ts`.
+```typescript
+// Example: Projects API hooks
+const { data: projects } = useGetProjects();
+const createProject = useCreateProject();
+const updateProject = useUpdateProject();
+const deleteProject = useDeleteProject();
+```
 
-## Getting Started
+### Projects API
+- `GET /api/projects` - List user projects (cached with `useGetProjects`)
+- `POST /api/projects` - Create new project (with optimistic updates)
+- `GET /api/projects/:id` - Get project details (cached with `useGetProject`)
+- `PATCH /api/projects/:id` - Update project (with optimistic updates)
+- `DELETE /api/projects/:id` - Delete project (with cache invalidation)
 
-To get a local copy up and running, follow these simple steps.
+### AI API
+- `POST /api/ai/generate-image` - Generate image from prompt (cached results)
+- `POST /api/ai/remove-background` - Remove image background (with retry logic)
 
-### Prerequisites
+### Images API
+- `GET /api/images` - Get stock images from Unsplash (infinite query)
+- `POST /api/images/upload` - Upload custom images (with progress tracking)
 
-*   Node.js (LTS recommended)
-*   npm or yarn
-*   A database (e.g., PostgreSQL compatible with Drizzle)
-*   API keys for:
-    *   Gemini
-    *   Remove.bg
-    *   Stripe
-    *   Unsplash
-    *   Uploadthing
-    *   Google/GitHub for NextAuth.js providers (optional)
+### Subscriptions API
+- `GET /api/subscriptions` - Get user subscription status (background sync)
+- `POST /api/subscriptions/checkout` - Create checkout session
+- `POST /api/subscriptions/billing` - Access billing portal
 
-### Installation
+## 🚀 Deployment
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/ismail-gits/nyvo.git
-    cd nyvo
-    ```
+### Vercel (Recommended)
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
+# Deploy
+vercel
+```
 
-3.  **Configure Environment Variables:**
-    Create a `.env` file in the root directory and add your environment variables. A `template.env` file might be provided or you'll need to create one based on the services used in `src/lib` and `src/auth.config.ts`.
-    ```env
-    # Database
-    DATABASE_URL="your_database_connection_string"
+### Environment Variables
+Ensure all required environment variables are configured in your deployment platform.
 
-    # NextAuth.js
-    AUTH_SECRET="your_nextauth_secret"
-    AUTH_GOOGLE_ID="your_google_client_id"
-    AUTH_GOOGLE_SECRET="your_google_client_secret"
-    # AUTH_GITHUB_ID="your_github_client_id"
-    # AUTH_GITHUB_SECRET="your_github_client_secret"
+### Database
+Set up PostgreSQL database and run migrations:
+```bash
+npm run db:migrate
+```
 
-    # Gemini AI
-    GEMINI_API_KEY="your_gemini_api_key"
+## 🧪 Testing
 
-    # Remove.bg
-    REMOVEBG_API_KEY="your_removebg_api_key"
+```bash
+# Run tests
+npm test
 
-    # Stripe
-    STRIPE_SECRET_KEY="your_stripe_secret_key"
-    STRIPE_WEBHOOK_SECRET="your_stripe_webhook_secret"
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="your_stripe_publishable_key"
+# Run tests in watch mode
+npm run test:watch
 
-    # Unsplash
-    UNSPLASH_ACCESS_KEY="your_unsplash_access_key"
+# Run integration tests
+npm run test:integration
+```
 
-    # Uploadthing
-    UPLOADTHING_SECRET="your_uploadthing_secret"
-    UPLOADTHING_APP_ID="your_uploadthing_app_id"
-    ```
+## 🤝 Contributing
 
-4.  **Database Migration (Drizzle ORM):**
-    Ensure your database is running and then apply migrations:
-    ```bash
-    npx drizzle-kit push:pg # or your chosen database type
-    ```
-    *Note: Refer to `drizzle.config.ts` for specific Drizzle commands if needed.*
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-5.  **Run the development server:**
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    ```
+### Code Style
+- Follow TypeScript strict mode guidelines
+- Use Prettier for code formatting
+- Follow the existing component architecture
+- Write meaningful commit messages
 
-    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+## 📝 License
 
-## Contributing
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-We welcome contributions! If you'd like to contribute, please fork the repository and create a pull request, or open an issue with the tag "enhancement" or "bug".
+## 🙏 Acknowledgments
 
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
+- [TanStack Query](https://tanstack.com/query) - Powerful data synchronization for React
+- [Fabric.js](http://fabricjs.com/) - Canvas library
+- [Next.js](https://nextjs.org/) - React framework
+- [shadcn/ui](https://ui.shadcn.com/) - UI component library
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Drizzle ORM](https://orm.drizzle.team/) - TypeScript ORM
+- [Hono.js](https://hono.dev/) - Fast web framework
 
-## License
+## 📧 Contact
 
-Distributed under the MIT License. See `LICENSE` for more information.
+**Developer**: Ismail
+- GitHub: [@ismail-gits](https://github.com/ismail-gits)
+- Email: [your-email@domain.com]
 
-## Contact
+## 🚀 Roadmap
 
-Ismail – ismail.gits@example.com (Placeholder - please replace with actual contact)
-
-Project Link: [https://github.com/ismail-gits/nyvo](https://github.com/ismail-gits/nyvo)
+### Upcoming Features
+- [ ] Real-time collaboration
+- [ ] Advanced animation tools
+- [ ] Vector graphics support
+- [ ] Plugin system
+- [ ] Mobile app
+- [ ] Team workspaces
+- [ ] Advanced AI integrations
+- [ ] Performance optimizations
 
 ---
+
+<div align="center">
+
+**⭐ Star this repository if you find it helpful!**
+
+[Demo](your-demo-link) • [Documentation](your-docs-link) • [Issues](https://github.com/ismail-gits/nyvo/issues) • [Discussions](https://github.com/ismail-gits/nyvo/discussions)
+
+</div>
