@@ -76,7 +76,7 @@ const Navbar = ({
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
-      <div className="w-full flex items-center gap-x-1 h-full">
+      <div className="w-full flex items-center overflow-x-auto gap-x-1">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size={"sm"} variant={"ghost"}>
